@@ -1,10 +1,10 @@
-package HospitalProgram.src;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import HospitalProgram.src.enums.BloodType;
+import enums.BloodType;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -21,7 +21,7 @@ import java.time.LocalDate;
 */
 public class Patient {
 
-    private static File workingFile = new File("HospitalProgram\\NumberOfRecords.txt");
+    private static File workingFile = new File("HospitalProgram\\HospitalManager\\src\\NumberOfRecords.txt");
     private static int numOfRecords;
     
     private String firstName;
@@ -68,6 +68,9 @@ public class Patient {
     private void assignPatientID() throws IOException{
 
         // Creating input scanner
+        if (workingFile.exists()){
+
+
         Scanner fileInput = new Scanner(workingFile);
         numOfRecords = fileInput.nextInt();
 
@@ -82,6 +85,11 @@ public class Patient {
         // Closes input and output files
         fileInput.close();
         fileOutput.close();
+
+        }
+        else{
+            System.out.println("SYSTEM ERROR: RECORDS FILE NOT FOUND");
+        }
 
     } 
 

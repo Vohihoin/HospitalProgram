@@ -1,4 +1,4 @@
-package HospitalProgram.src;
+
 
 /**
  * This class is used internally in the hospital program to represent differences in date

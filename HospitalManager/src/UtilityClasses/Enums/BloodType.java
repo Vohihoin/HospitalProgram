@@ -1,4 +1,4 @@
-package HospitalProgram.src.enums;
+package enums;
 
 public enum BloodType {
     
