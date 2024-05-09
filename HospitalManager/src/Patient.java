@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import enums.BloodType;
+import UtilityClasses.Enums.BloodType;
+import UtilityClasses.Enums.MaritalStatus;
+import UtilityClasses.General.Date;
+import UtilityClasses.General.DateDifference;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -30,6 +33,7 @@ public class Patient {
     private Date dateOfBirth;
     private ArrayList<Date> datesVisited = new ArrayList<Date>();
     private BloodType bloodType;
+    private MaritalStatus maritalStatus;
 
 
     /**
@@ -52,10 +56,20 @@ public class Patient {
 
     }
 
-    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType) throws IOException{
+    /**
+     * This constructor allows us to assign information about the patient's blood type and marital status.
+     * @param i_firstName
+     * @param i_lastName
+     * @param i_dateOfBirth
+     * @param i_bloodType
+     * @param i_maritalStatus
+     * @throws IOException
+     */
+    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus) throws IOException{
 
         this(i_firstName, i_lastName, i_dateOfBirth); // uses the standard patient constructor
         bloodType = i_bloodType;
+        maritalStatus = i_maritalStatus;
 
     }
 

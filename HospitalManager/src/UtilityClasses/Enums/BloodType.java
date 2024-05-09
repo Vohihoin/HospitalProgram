@@ -1,4 +1,4 @@
-package enums;
+package UtilityClasses.Enums;
 
 public enum BloodType {
     
