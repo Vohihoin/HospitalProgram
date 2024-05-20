@@ -24,7 +24,7 @@ import java.time.LocalDate;
 */
 public class Patient {
 
-    private static File workingFile = new File("HospitalProgram\\HospitalManager\\src\\NumberOfRecords.txt");
+    private static File workingFile = new File("HospitalManager\\src\\NumberOfRecords.txt");
     private static int numOfRecords;
     
     private String firstName;
