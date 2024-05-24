@@ -2,17 +2,21 @@ package DatabaseClasses;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.print.event.PrintJobAttributeEvent;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-
 import com.mysql.cj.jdbc.Driver;
+import UtilityClasses.General.Patient;
 
 
-
+/**
+ * This class is only used staticly to perform certain database functions and receive certain database information
+ */
 public class DatabaseManager{
 
     private static String databaseName = "patient_data";
@@ -84,6 +88,23 @@ public class DatabaseManager{
 
         return(totalString);
         
+    }
+
+    public static void addRecord(Patient patient) throws SQLException{
+        String tableName = "patient_info";
+        Connection con = createConnection();
+        Statement query = con.createStatement();
+        String queryString = 
+
+        String.format(
+        "INSERT INTO %s VALUES ( %d, '%s', '%s', '%s', '%s', '%s' )", 
+        tableName, patient.getPatientID(), patient.getFirstName(), patient.getLastName(), patient.getDateOfBirth().toDatabaseString(),
+        patient.getBloodType().toDatabaseString(), patient.getMaritalStatus().toDatabaseString()
+        );
+        
+        query.executeUpdate(queryString);
+
+
     }
 
 }

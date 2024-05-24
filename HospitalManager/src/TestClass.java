@@ -1,9 +1,13 @@
-
-
 import UtilityClasses.General.Date;
+import UtilityClasses.General.Patient;
+
 import java.io.IOException;
 import DatabaseClasses.DatabaseManager;
-import UtilityClasses.Enums.MaritalStatus;
+import UtilityClasses.Enums.*;
+import UtilityClasses.General.*;
+
+
+
 import com.mysql.cj.jdbc.Driver;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,11 +23,16 @@ public class TestClass {
         Date newDate = new Date();
 
         Patient me = new Patient("Aigbe", "Ohihoin", newDate);
-        System.out.println(me.age());
-        int i;
 
-        System.out.println(DatabaseManager.returnResultsTable("patient_info"));
+        me.addVisitedDate(5, 20, 2024);
+        me.addVisitedDate(6,1,2024);
 
+
+
+        me.setMaritalStatus(MaritalStatus.MARRIED);
+        me.setBloodType(BloodType.A_POSITIVE);
+
+        DatabaseManager.addRecord(me);
         
     }
 }

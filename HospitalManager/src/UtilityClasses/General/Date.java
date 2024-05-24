@@ -94,6 +94,7 @@ public class Date {
 
         }
 
+
     }
 
     public int day(){
@@ -144,6 +145,16 @@ public class Date {
         }
 
         return monthString + "/" + dayString + "/" + yearString;
+
+    }
+
+    public String toDatabaseString(){
+
+        String month = toString().substring(0, 2);
+        String day = toString().substring(3,5);
+        String year = toString().substring(6,10);
+
+        return year + "-" + month + "-" + day;
 
     }
 
@@ -269,6 +280,76 @@ public class Date {
 
     }
 
+    /** 
+     * Tells you if a date is valid
+     * 
+     * @param i_month
+     * @param i_day
+     * @param i_year
+     * @return
+     */
+    public static boolean validDate(int i_month, int i_day, int i_year){
+
+        if (!(i_month <= 12 && i_month >= 1)){
+            return false;
+        }
+
+        if (!(i_year >= 0)){
+            return false;
+        }
+
+        boolean thirtyMonth = (i_month == 9) || (i_month == 4) || (i_month == 6) || (i_month == 11);
+        boolean thirtyOneMonth = (i_month == 1) || (i_month == 3) || (i_month == 5) || (i_month == 7) || (i_month == 8) || (i_month == 10) ||
+                                 (i_month == 12);
+        boolean twentyEightMonth = (i_month == 2) && ( (i_year % 4) != 0 );
+        boolean twentyNineMonth = (i_month == 2) &&  (
+                                 ( (i_year % 100 != 0) && ( (i_year % 4)  == 0)  ) ||
+                                 ( (i_year % 400) == 0)
+                                 );
+    
+        if (i_day < 1){
+
+            return false;
+
+        }
+        else{
+
+            if (thirtyMonth){
+                if (!(i_day <= 30)){
+                    return false;
+                }
+            }
+
+            if (thirtyOneMonth){
+                if (!(i_day <= 31)){
+                    return false;
+                }
+            }
+
+
+            if (twentyEightMonth){
+                if (!(i_day <= 28)){
+                    return false;
+                }
+            }
+
+
+            if (twentyNineMonth){
+                if (!(i_day <= 29)){
+                    return false;
+                }
+            }
+
+        }
+
+        return true;
+
+    }
+
+
+    
     
 
 }
+
+

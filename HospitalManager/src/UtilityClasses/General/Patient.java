@@ -1,13 +1,13 @@
+package UtilityClasses.General;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
 import UtilityClasses.Enums.BloodType;
 import UtilityClasses.Enums.MaritalStatus;
-import UtilityClasses.General.Date;
-import UtilityClasses.General.DateDifference;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -24,16 +24,23 @@ import java.time.LocalDate;
 */
 public class Patient {
 
-    private static File workingFile = new File("HospitalManager\\src\\NumberOfRecords.txt");
+    // Static Record Keeping Variables
+    private static File recordsFile = new File("HospitalManager\\src\\TextFiles\\NumberOfRecords.txt");
+    private static File visitedDatesFile = new File("HospitalManager\\src\\TextFiles\\VisitedDates.txt");
     private static int numOfRecords;
     
+    // Basic Patient Variables
     private String firstName;
     private String lastName;
     private int patientID;
     private Date dateOfBirth;
-    private ArrayList<Date> datesVisited = new ArrayList<Date>();
     private BloodType bloodType;
     private MaritalStatus maritalStatus;
+    
+
+    // More complex information on patients
+    private ArrayList<Date> datesVisited = new ArrayList<Date>();
+
 
 
     /**
@@ -51,7 +58,15 @@ public class Patient {
         firstName = i_firstName;
         lastName = i_lastName;
         dateOfBirth = i_dateOfBirth;
-        assignPatientID();
+        maritalStatus = null;
+        bloodType = null;
+        try{
+            assignPatientID();
+        }
+        catch(IOException e){
+            System.out.println("ERROR WITH NUMBER OF RECORDS FILE");
+        }
+        
 
 
     }
@@ -82,10 +97,10 @@ public class Patient {
     private void assignPatientID() throws IOException{
 
         // Creating input scanner
-        if (workingFile.exists()){
+        if (recordsFile.exists()){
 
 
-        Scanner fileInput = new Scanner(workingFile);
+        Scanner fileInput = new Scanner(recordsFile);
         numOfRecords = fileInput.nextInt();
 
         //Getting patient ID
@@ -93,7 +108,7 @@ public class Patient {
         numOfRecords += 1;
 
         //Outputing new number of patients to file
-        PrintWriter fileOutput = new PrintWriter(workingFile);
+        PrintWriter fileOutput = new PrintWriter(recordsFile);
         fileOutput.print(numOfRecords);
 
         // Closes input and output files
@@ -107,16 +122,19 @@ public class Patient {
 
     } 
 
+    /**
+     * Prints out the patients name
+     */
     public String toString(){
 
-        return (patientID + " " + firstName + " " + lastName);
+        return (firstName + " " + lastName);
     }
 
     /**
      * Returns the patient's age
      * @return
      */
-    public int age(){
+    public int getAge(){
         // Create a local date object using the java time class
         LocalDate currDate = LocalDate.now();
         
@@ -129,5 +147,126 @@ public class Patient {
         return dDifference.year();
         
     }
+
+    public void setMaritalStatus(MaritalStatus i_MaritalStatus){
+
+        maritalStatus = i_MaritalStatus;
+
+    }
+
+    public void changeFirstName(String i_firstName){
+
+        firstName = i_firstName;
+
+    }
+
+    public void changeLastName(String i_lastName){
+
+        lastName = i_lastName;
+
+    }
+
+    public void changeName(String i_firstName, String i_lastName){
+
+        changeFirstName(i_firstName);
+        changeLastName(i_lastName);
+
+    }
+
+    public void setBloodType(BloodType i_bloodType){
+
+        bloodType = i_bloodType;
+
+    }
+
+    public void addVisitedDate(Date i_date){
+
+        datesVisited.add(i_date);
+
+    }
+
+    public int getPatientID(){
+
+        return patientID;
+
+    }
+
+    public String getFirstName(){
+
+        return firstName;
+
+    }
+
+    public String getLastName(){
+
+        return lastName;
+
+    }
+
+    public Date getDateOfBirth(){
+
+        return dateOfBirth;
+
+    }
+
+    public BloodType getBloodType(){
+
+        return bloodType;
+
+    }
+
+    public MaritalStatus getMaritalStatus(){
+        return maritalStatus;
+    }
+
+    public void addVisitedDate(int month, int day, int year){
+
+        if (Date.validDate(month, day, year)){
+            datesVisited.add(new Date(month, day, year));
+        }
+        else{
+            System.out.println("INVALID VISITED DATE");
+        }
+
+    }
+
+    private void recordPatientDates() throws IOException{
+        
+        FileWriter fw = new FileWriter("HospitalManager\\src\\TextFiles\\VisitedDates.txt", true);
+        PrintWriter pw = new PrintWriter(fw);
+
+        pw.print(patientID + " ");
+
+        for (Date date : datesVisited){
+
+            pw.print(date + " ");
+
+        }
+
+        pw.println();
+        pw.close();
+
+    }
+
+
+    public void printDatesVisited(){
+        for (Date date: datesVisited){
+
+            System.out.println(date);
+
+        }
+    }
+
+    /**
+     * Saves all Patient Data in the appropriate locations
+     */
+    public void savePatientData(){
+
+        
+
+
+    }
+
+
 
 }
