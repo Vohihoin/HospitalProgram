@@ -10,7 +10,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import com.mysql.cj.jdbc.Driver;
 import UtilityClasses.General.Patient;
 
 
@@ -90,7 +89,14 @@ public class DatabaseManager{
         
     }
 
+    /**
+     * Takes in a patient object and adds its record into the database's patient_info table
+     * 
+     * @param patient Patient object for patient's record to be added
+     * @throws SQLException
+     */
     public static void addRecord(Patient patient) throws SQLException{
+
         String tableName = "patient_info";
         Connection con = createConnection();
         Statement query = con.createStatement();

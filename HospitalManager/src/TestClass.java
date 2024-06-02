@@ -23,6 +23,7 @@ public class TestClass {
         Date newDate = new Date();
 
         Patient me = new Patient("Aigbe", "Ohihoin", newDate);
+        
 
         me.addVisitedDate(5, 20, 2024);
         me.addVisitedDate(6,1,2024);
@@ -32,7 +33,8 @@ public class TestClass {
         me.setMaritalStatus(MaritalStatus.MARRIED);
         me.setBloodType(BloodType.A_POSITIVE);
 
-        DatabaseManager.addRecord(me);
+
+        System.out.println(DatabaseManager.returnResultsTable("patient_info"));
         
     }
 }

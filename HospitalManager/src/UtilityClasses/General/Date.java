@@ -346,6 +346,21 @@ public class Date {
 
     }
 
+    /**
+     * Takes a string of the format date is stored in the database and creates a date object from it
+     * @param databaseString
+     * @return
+     */
+    public static Date createDateFromDatabaseString(String databaseString){
+
+        int year = Integer.parseInt(databaseString.substring(0,4));
+        int month = Integer.parseInt(databaseString.substring(5, 7));
+        int day = Integer.parseInt(databaseString.substring(8, 10));
+
+        return (new Date(month, day, year));
+
+    }
+
 
     
     

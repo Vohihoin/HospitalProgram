@@ -88,6 +88,19 @@ public class Patient {
 
     }
 
+    
+    public Patient(int i_patientID, String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus){
+
+        patientID = i_patientID;
+        firstName = i_firstName;
+        lastName = i_lastName;
+        dateOfBirth = i_dateOfBirth;
+        bloodType = i_bloodType;
+        maritalStatus = i_maritalStatus;
+
+
+    }
+
     /**
      * Assigns the patient ID using the number of records on file
      * 
