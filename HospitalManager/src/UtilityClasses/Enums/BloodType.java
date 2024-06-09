@@ -40,6 +40,39 @@ public enum BloodType {
 
     }
 
+    public static BloodType bloodTypeFromDBString(String databaseString){
+
+        if (databaseString.equals("A+")){
+            return A_POSITIVE;
+        }
+        else if (databaseString.equals("A-")){
+            return A_NEGATIVE;
+        }
+        else if (databaseString.equals("B+")){
+            return B_POSITIVE;
+        }
+        else if (databaseString.equals("B-")){
+            return B_NEGATIVE;
+        }
+        else if (databaseString.equals("AB+")){
+            return AB_POSITIVE;
+        }
+        else if (databaseString.equals("AB-")){
+            return AB_NEGATIVE;
+        }
+        else if (databaseString.equals("O+")){
+            return O_POSITIVE;
+        }
+        else if (databaseString.equals("O-")){
+            return O_NEGATIVE;
+        }
+        else{
+            return null;
+        }
+    
+
+    }
+
 
 
 }

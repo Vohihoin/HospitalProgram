@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import DatabaseClasses.DatabaseManager;
 import UtilityClasses.Enums.BloodType;
 import UtilityClasses.Enums.MaritalStatus;
+import UtilityClasses.Exceptions.InvalidInputException;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -51,12 +54,11 @@ public class Patient {
      * @param i_dateOfBirth Patient's Date of Birth as a date object
      * @throws IOException
      */
-    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth) throws IOException{
+    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth) throws IOException, InvalidInputException{
 
         
 
-        firstName = i_firstName;
-        lastName = i_lastName;
+        changeName(i_firstName, i_lastName);
         dateOfBirth = i_dateOfBirth;
         maritalStatus = null;
         bloodType = null;
@@ -80,7 +82,7 @@ public class Patient {
      * @param i_maritalStatus
      * @throws IOException
      */
-    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus) throws IOException{
+    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus) throws IOException, InvalidInputException{
 
         this(i_firstName, i_lastName, i_dateOfBirth); // uses the standard patient constructor
         bloodType = i_bloodType;
@@ -88,12 +90,21 @@ public class Patient {
 
     }
 
-    
+    /**
+     * Constructor that takes patientID as input. Used when loading in patient objects from database.
+     * @param i_patientID
+     * @param i_firstName
+     * @param i_lastName
+     * @param i_dateOfBirth
+     * @param i_bloodType
+     * @param i_maritalStatus
+     * @author Ohihoin Vahe
+     */
     public Patient(int i_patientID, String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus){
 
         patientID = i_patientID;
-        firstName = i_firstName;
-        lastName = i_lastName;
+        firstName = i_firstName.toUpperCase();
+        lastName = i_lastName.toUpperCase();
         dateOfBirth = i_dateOfBirth;
         bloodType = i_bloodType;
         maritalStatus = i_maritalStatus;
@@ -136,7 +147,7 @@ public class Patient {
     } 
 
     /**
-     * Prints out the patients name
+     * Returns string of patient's name
      */
     public String toString(){
 
@@ -144,7 +155,7 @@ public class Patient {
     }
 
     /**
-     * Returns the patient's age
+     * Returns the patient's age using their date of birth
      * @return
      */
     public int getAge(){
@@ -161,77 +172,143 @@ public class Patient {
         
     }
 
+    /**
+     * Setter method for marital status
+     * @param i_MaritalStatus
+     */
     public void setMaritalStatus(MaritalStatus i_MaritalStatus){
 
         maritalStatus = i_MaritalStatus;
 
     }
 
-    public void changeFirstName(String i_firstName){
+    /**
+     * Setter method for first name
+     * @param i_firstName
+     */
+    public void changeFirstName(String i_firstName) throws InvalidInputException{
 
-        firstName = i_firstName;
+        if (i_firstName.isBlank()){
+            throw new InvalidInputException("BLANK SPACE INPUT");
+        }
+        else{
+            firstName = i_firstName.toUpperCase();
+        }
+
 
     }
 
-    public void changeLastName(String i_lastName){
+    /**
+     * Setter method for last name
+     * @param i_lastName
+     */
+    public void changeLastName(String i_lastName) throws InvalidInputException{
 
-        lastName = i_lastName;
+        if (i_lastName.isBlank()){
+            throw new InvalidInputException("BLANK SPACE INPUT");
+        }
+        else{
+            lastName = i_lastName.toUpperCase();
+        }
 
     }
 
-    public void changeName(String i_firstName, String i_lastName){
+    /**
+     * Setter method for patient's name
+     * @param i_firstName
+     * @param i_lastName
+     */
+    public void changeName(String i_firstName, String i_lastName) throws InvalidInputException{
 
         changeFirstName(i_firstName);
         changeLastName(i_lastName);
 
     }
 
+    /**
+     * Setter method for patient's blood type
+     * @param i_bloodType
+     */
     public void setBloodType(BloodType i_bloodType){
 
         bloodType = i_bloodType;
 
     }
 
+    /**
+     * Method to add a visited date to the patient object using a date object
+     * @param i_date
+     */
     public void addVisitedDate(Date i_date){
 
         datesVisited.add(i_date);
 
     }
 
+    /**
+     * Getter method for the patient's ID
+     * @return int
+     */
     public int getPatientID(){
 
         return patientID;
 
     }
 
+    /**
+     * Getter method for the patient's first name
+     * @return String
+     */
     public String getFirstName(){
 
         return firstName;
 
     }
 
+     /**
+      * Getter method for patient's last name
+      * @return String
+      */
     public String getLastName(){
 
         return lastName;
 
     }
 
+    /**
+     * Getter method for patient's date of birth
+     * @return Date Object
+     */
     public Date getDateOfBirth(){
 
         return dateOfBirth;
 
     }
 
+    /**
+     * Getter method for patient's blood type
+     * @return BloodType Object
+     */
     public BloodType getBloodType(){
 
         return bloodType;
 
     }
 
+    /**
+     * Getter method for patient's marital status
+     * @return MaritalStatus Object
+     */
     public MaritalStatus getMaritalStatus(){
         return maritalStatus;
     }
 
+    /**
+     * Adds visited date to patient object using the values of month, day and year
+     * @param month
+     * @param day
+     * @param year
+     */
     public void addVisitedDate(int month, int day, int year){
 
         if (Date.validDate(month, day, year)){
@@ -243,6 +320,10 @@ public class Patient {
 
     }
 
+    /**
+     * Records the patient's visited dates in the visited dates record file
+     * @throws IOException
+     */
     private void recordPatientDates() throws IOException{
         
         FileWriter fw = new FileWriter("HospitalManager\\src\\TextFiles\\VisitedDates.txt", true);
@@ -261,22 +342,38 @@ public class Patient {
 
     }
 
+    /**
+     * Returns a string containing the patient's visited dates, separated by spaces and NOT ending in a space
+     * @return String
+     */
+    public String datesVisited(){
 
-    public void printDatesVisited(){
+        String datesVisitedString = "";
+
         for (Date date: datesVisited){
 
-            System.out.println(date);
+            datesVisitedString += date + " ";
 
         }
+
+
+        datesVisitedString = datesVisitedString.substring(0, datesVisitedString.length()-1); // Removes the last space
+        return datesVisitedString;
+        
+    }
+
+
+    public void printDatesVisited(){
+        System.out.println(datesVisited());
     }
 
     /**
-     * Saves all Patient Data in the appropriate locations
+     * Saves Patient Data in SQL Database and in Visited Dates Text File
      */
-    public void savePatientData(){
+    public void savePatientData() throws SQLException, IOException{
 
-        
-
+        DatabaseManager.addRecord(this);
+        recordPatientDates();
 
     }
 

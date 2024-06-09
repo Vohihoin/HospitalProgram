@@ -1,0 +1,12 @@
+"filename", "language", "Java", "Markdown", "SQL", "comment", "blank", "total"
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\DatabaseClasses\DatabaseManager.java", "Java", 57, 0, 0, 28, 31, 116
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\Main.java", "Java", 107, 0, 0, 13, 46, 166
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\TestClass.java", "Java", 16, 0, 0, 0, 11, 27
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\Enums\BloodType.java", "Java", 66, 0, 0, 0, 16, 82
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\Enums\MaritalStatus.java", "Java", 38, 0, 0, 7, 9, 54
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\General\Date.java", "Java", 271, 0, 0, 27, 106, 404
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\General\DateDifference.java", "Java", 27, 0, 0, 13, 16, 56
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\General\Patient.java", "Java", 138, 0, 0, 63, 97, 298
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalProgramSQLFiles\CreatingTestDatabase.sql", "SQL", 0, 0, 13, 0, 4, 17
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\README.md", "Markdown", 0, 2, 0, 0, 1, 3
+"Total", "-", 720, 2, 13, 151, 337, 1223

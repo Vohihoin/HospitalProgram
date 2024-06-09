@@ -19,22 +19,8 @@ import java.sql.DriverManager;
 public class TestClass {
     
     public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException{
+
         
-        Date newDate = new Date();
-
-        Patient me = new Patient("Aigbe", "Ohihoin", newDate);
-        
-
-        me.addVisitedDate(5, 20, 2024);
-        me.addVisitedDate(6,1,2024);
-
-
-
-        me.setMaritalStatus(MaritalStatus.MARRIED);
-        me.setBloodType(BloodType.A_POSITIVE);
-
-
-        System.out.println(DatabaseManager.returnResultsTable("patient_info"));
         
     }
 }

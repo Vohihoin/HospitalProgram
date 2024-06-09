@@ -103,9 +103,16 @@ public class DatabaseManager{
         String queryString = 
 
         String.format(
+
         "INSERT INTO %s VALUES ( %d, '%s', '%s', '%s', '%s', '%s' )", 
-        tableName, patient.getPatientID(), patient.getFirstName(), patient.getLastName(), patient.getDateOfBirth().toDatabaseString(),
-        patient.getBloodType().toDatabaseString(), patient.getMaritalStatus().toDatabaseString()
+        tableName, 
+        patient.getPatientID(), 
+        patient.getFirstName(), 
+        patient.getLastName(), 
+        patient.getDateOfBirth().toDatabaseString(),
+        patient.getBloodType().toDatabaseString(), 
+        patient.getMaritalStatus().toDatabaseString()
+
         );
         
         query.executeUpdate(queryString);

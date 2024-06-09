@@ -351,13 +351,46 @@ public class Date {
      * @param databaseString
      * @return
      */
-    public static Date createDateFromDatabaseString(String databaseString){
+    public static Date dateFromDBString(String databaseString){
+        int i;
 
-        int year = Integer.parseInt(databaseString.substring(0,4));
-        int month = Integer.parseInt(databaseString.substring(5, 7));
-        int day = Integer.parseInt(databaseString.substring(8, 10));
+        try{
 
-        return (new Date(month, day, year));
+            int year = Integer.parseInt(databaseString.substring(0,4));
+            int month = Integer.parseInt(databaseString.substring(5, 7));
+            int day = Integer.parseInt(databaseString.substring(8, 10));
+
+            return (new Date(month, day, year));
+
+        }catch(NumberFormatException ne){
+
+            System.out.println("DATABASE DATE STRING INPUT NOT ACCURATE");
+            System.out.println("STACK TRACE:");
+            
+            StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+            for (i = 0; i < elements.length; i++){
+
+                System.out.println(elements[i].toString());
+
+            }
+        }
+
+        return null;
+
+    }
+
+    public static Date dateFromTxtFileString(String textString){
+
+        try{
+            int month = Integer.parseInt(textString.substring(0,2));
+            int day = Integer.parseInt(textString.substring(3, 5));
+            int year = Integer.parseInt(textString.substring(6, 10));
+            return (new Date(month, day, year));
+        }
+        catch(NumberFormatException ne){
+            return null;
+        }
+
 
     }
 
