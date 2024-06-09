@@ -261,7 +261,7 @@ public class Patient {
      */
     public String getFirstName(){
 
-        return firstName;
+        return firstName.toUpperCase();
 
     }
 
@@ -271,7 +271,7 @@ public class Patient {
       */
     public String getLastName(){
 
-        return lastName;
+        return lastName.toUpperCase();
 
     }
 

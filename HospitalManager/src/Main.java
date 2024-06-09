@@ -4,15 +4,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.mysql.cj.conf.ConnectionUrlParser.Pair;
+
 import DatabaseClasses.DatabaseManager;
 import UtilityClasses.Enums.BloodType;
 import UtilityClasses.Enums.MaritalStatus;
+import UtilityClasses.Exceptions.PatientNotFoundException;
 import UtilityClasses.General.Date;
 import UtilityClasses.General.Patient;
 
 public class Main {
 
-    public static ArrayList<Patient> loadPatients() throws SQLException, IOException{
+    // Made the patient's array list a global variable
+    public static ArrayList<Patient> patients;
+
+    public static ArrayList<Patient> loadPatients() throws SQLException, IOException, PatientNotFoundException{
 
         String tableName = "patient_info";
         String currentLine;
@@ -163,9 +169,57 @@ public class Main {
 
     }
 
-    public static void main(String[] args) throws SQLException, IOException{
+    /**
+     * Finds patient using first and last name
+     * @param i_firstName
+     * @param i_lastName
+     * @return Patient Object
+     * @throws PatientNotFoundException
+     */
+    public static Patient findPatient(String i_firstName, String i_lastName) throws PatientNotFoundException{
+
+        for (Patient patient: patients){
+
+            if (
+            patient.getFirstName().equals(i_firstName.toUpperCase()) && 
+            patient.getLastName().equals(i_lastName.toUpperCase()))
+            {
+                return patient;
+            }
+
+        }
+
+        throw new PatientNotFoundException("CAN'T FIND PATIENT WITH NAME: " + i_firstName + " " + i_lastName);
+
+    }
+
+    /**
+     * Finds patient using patient ID
+     * @param i_patientID
+     * @return Patient Object
+     * @throws PatientNotFoundException
+     */
+    public static Patient findPatient(int i_patientID) throws PatientNotFoundException{
+
+        for (Patient patient: patients){
+
+            if (
+                patient.getPatientID() == i_patientID
+            )
+            {
+                return patient;
+            }
+
+        }
+
+        throw new PatientNotFoundException("CAN'T FIND PATIENT WITH ID: " + i_patientID);
+
+
+    }
+    
+    public static void main(String[] args) throws SQLException, IOException, PatientNotFoundException{
         int i;
-        ArrayList<Patient> patients = loadPatients(); 
+        patients = loadPatients(); 
 
         for (i = 0; i < patients.size(); i++){
 
@@ -173,6 +227,8 @@ public class Main {
             patients.get(i).printDatesVisited();
 
         }
+
+        System.out.println(findPatient("vahee", "ohihoin"));
 
 
     }
