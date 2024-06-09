@@ -119,5 +119,22 @@ public class DatabaseManager{
 
 
     }
+    
+    /**
+     * CAUTION: Very Dangerous Method!
+     * 
+     * REMOVES ALL THE DATA FROM THE TABLE.
+     * DON'T USE UNLESS YOU HAVE PROPER ADMINISTRATIVE ACCESS.
+     * @throws SQLException
+     */
+    public static void truncateTable() throws SQLException{
+
+        Connection con = createConnection();
+        String tableName = "patient_info";
+        Statement workingStatement = con.createStatement();
+
+        workingStatement.executeUpdate("TRUNCATE TABLE " + tableName);
+
+    }
 
 }

@@ -217,6 +217,74 @@ public class Main {
 
     }
     
+    /**
+     * Finds all the patient's with the given first name
+     * @param i_firstName
+     * @return Patient Array List
+     * @throws PatientNotFoundException
+     */
+    public static ArrayList<Patient> findPatientsWithFirstName(String i_firstName) throws PatientNotFoundException{
+
+        ArrayList<Patient> allPatients = new ArrayList<>();
+        for (Patient patient: patients){
+
+            if (
+                patient.getFirstName().equals(i_firstName.toUpperCase())
+            )
+            {
+                allPatients.add(patient);
+            }
+
+        }
+
+        if (allPatients.isEmpty()){
+            throw new PatientNotFoundException("CAN'T FIND ANY PATIENTS WITH NAME: " + i_firstName);
+        }
+        else{
+            return allPatients;
+        }
+
+    }
+
+    /**
+     * Finds all patients with given last name
+     * @param i_lastName
+     * @return Patient ArrayList
+     * @throws PatientNotFoundException
+     */
+    public static ArrayList<Patient> findPatientsWithLastName(String i_lastName) throws PatientNotFoundException{
+
+        ArrayList<Patient> allPatients = new ArrayList<>();
+        for (Patient patient: patients){
+
+            if (
+                patient.getLastName().equals(i_lastName.toUpperCase())
+            )
+            {
+                allPatients.add(patient);
+            }
+
+        }
+
+        if (allPatients.isEmpty()){
+            throw new PatientNotFoundException("CAN'T FIND ANY PATIENTS WITH LAST NAME: " + i_lastName);
+        }
+        else{
+            return allPatients;
+        }
+
+    }
+    
+    /**
+     * Deletes a given patient
+     * @param patient
+     */
+    private static void deletePatient(Patient patient){
+
+        patients.remove(patient);
+
+    }
+
     public static void main(String[] args) throws SQLException, IOException, PatientNotFoundException{
         int i;
         patients = loadPatients(); 
@@ -228,7 +296,7 @@ public class Main {
 
         }
 
-        System.out.println(findPatient("vahee", "ohihoin"));
+        System.out.println(findPatient("VaHe", "ohihOIn"));
 
 
     }
