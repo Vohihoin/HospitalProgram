@@ -280,6 +280,20 @@ public class Date {
 
     }
 
+    /**
+     * Returns true if two date objects are equivalent, else returns false
+     * @param i_date
+     * @return boolean
+     */
+    public boolean equals(Date i_date){
+
+        return (
+            i_date.day() == this.day() &&
+            i_date.month() == this.month() &&
+            i_date.year() == this.year()
+        );
+    }
+
     /** 
      * Tells you if a date is valid
      * 

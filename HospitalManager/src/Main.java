@@ -6,9 +6,11 @@ import java.util.Scanner;
 
 import com.mysql.cj.conf.ConnectionUrlParser.Pair;
 
-import DatabaseClasses.DatabaseManager;
+import DataManagingClasses.DatabaseManager;
+import DataManagingClasses.DatesVisitedManager;
 import UtilityClasses.Enums.BloodType;
 import UtilityClasses.Enums.MaritalStatus;
+import UtilityClasses.Exceptions.InvalidInputException;
 import UtilityClasses.Exceptions.PatientNotFoundException;
 import UtilityClasses.General.Date;
 import UtilityClasses.General.Patient;
@@ -17,6 +19,25 @@ public class Main {
 
     // Made the patient's array list a global variable
     public static ArrayList<Patient> patients;
+
+    public static void main(String[] args) throws SQLException, IOException, PatientNotFoundException{
+        int i;
+        patients = loadPatients(); 
+
+        for (i = 0; i < patients.size(); i++){
+
+            System.out.print(patients.get(i) + " ");
+            patients.get(i).printDatesVisited();
+
+        }
+
+
+        patients.get(0).addVisitedDate(6, 10, 2024);
+
+        saveData();
+
+
+    }
 
     public static ArrayList<Patient> loadPatients() throws SQLException, IOException, PatientNotFoundException{
 
@@ -285,20 +306,23 @@ public class Main {
 
     }
 
-    public static void main(String[] args) throws SQLException, IOException, PatientNotFoundException{
-        int i;
-        patients = loadPatients(); 
+    /**
+     * Saves All The Patient Data In Appropiate Locations
+     * @throws SQLException
+     * @throws IOException
+     */
+    private static void saveData() throws SQLException, IOException{
 
-        for (i = 0; i < patients.size(); i++){
+        DatabaseManager.truncateTable();
+        DatesVisitedManager.clearFile();
 
-            System.out.print(patients.get(i) + " ");
-            patients.get(i).printDatesVisited();
-
+        for (Patient patient: patients){
+            patient.savePatientData();
         }
 
-        System.out.println(findPatient("VaHe", "ohihOIn"));
-
+        System.out.println("DATA SAVED....");
 
     }
+
     
 }

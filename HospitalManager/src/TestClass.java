@@ -2,13 +2,16 @@ import UtilityClasses.General.Date;
 import UtilityClasses.General.Patient;
 
 import java.io.IOException;
-import DatabaseClasses.DatabaseManager;
+
 import UtilityClasses.Enums.*;
 import UtilityClasses.General.*;
 
 
 
 import com.mysql.cj.jdbc.Driver;
+
+import DataManagingClasses.DatabaseManager;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

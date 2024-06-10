@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import DatabaseClasses.DatabaseManager;
+import DataManagingClasses.DatabaseManager;
 import UtilityClasses.Enums.BloodType;
 import UtilityClasses.Enums.MaritalStatus;
 import UtilityClasses.Exceptions.InvalidInputException;
@@ -362,6 +362,23 @@ public class Patient {
         
     }
 
+    /**
+     * Returns true if the patient objects have equal first names, last names, and date of births.
+     * Else returns false
+     * @param i_patient
+     * @return boolean
+     */
+    public boolean equals(Patient i_patient){
+
+        return(
+
+        i_patient.getFirstName() == this.firstName &&
+        i_patient.getLastName() == this.lastName &&
+        i_patient.getDateOfBirth().equals(this.dateOfBirth)
+
+        );
+
+    }
 
     public void printDatesVisited(){
         System.out.println(datesVisited());
@@ -376,6 +393,7 @@ public class Patient {
         recordPatientDates();
 
     }
+
 
 
 

@@ -4,6 +4,8 @@ package UtilityClasses.General;
 /**
  * This class is used internally in the hospital program to represent differences in date
  * that couldn't be represented as traditional dates
+ * 
+ * @author Ohihoin Vahe
  */
 public class DateDifference {
     

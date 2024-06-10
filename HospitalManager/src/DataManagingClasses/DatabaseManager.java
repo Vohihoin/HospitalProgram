@@ -1,4 +1,4 @@
-package DatabaseClasses;
+package DataManagingClasses;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
