@@ -10,6 +10,7 @@ import java.util.Scanner;
 import DataManagingClasses.DatabaseManager;
 import UtilityClasses.Enums.BloodType;
 import UtilityClasses.Enums.MaritalStatus;
+import UtilityClasses.Enums.Sex;
 import UtilityClasses.Exceptions.InvalidInputException;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class Patient {
     private Date dateOfBirth;
     private BloodType bloodType;
     private MaritalStatus maritalStatus;
+    private Sex sex;
     
 
     // More complex information on patients
@@ -58,7 +60,7 @@ public class Patient {
 
         
 
-        changeName(i_firstName, i_lastName);
+        setName(i_firstName, i_lastName);
         dateOfBirth = i_dateOfBirth;
         maritalStatus = null;
         bloodType = null;
@@ -82,11 +84,12 @@ public class Patient {
      * @param i_maritalStatus
      * @throws IOException
      */
-    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus) throws IOException, InvalidInputException{
+    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus, Sex i_sex) throws IOException, InvalidInputException{
 
         this(i_firstName, i_lastName, i_dateOfBirth); // uses the standard patient constructor
         bloodType = i_bloodType;
         maritalStatus = i_maritalStatus;
+        sex = i_sex;
 
     }
 
@@ -100,7 +103,7 @@ public class Patient {
      * @param i_maritalStatus
      * @author Ohihoin Vahe
      */
-    public Patient(int i_patientID, String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus){
+    public Patient(int i_patientID, String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus, Sex i_sex){
 
         patientID = i_patientID;
         firstName = i_firstName.toUpperCase();
@@ -108,6 +111,7 @@ public class Patient {
         dateOfBirth = i_dateOfBirth;
         bloodType = i_bloodType;
         maritalStatus = i_maritalStatus;
+        sex = i_sex;
 
 
     }
@@ -186,7 +190,7 @@ public class Patient {
      * Setter method for first name
      * @param i_firstName
      */
-    public void changeFirstName(String i_firstName) throws InvalidInputException{
+    public void setFirstName(String i_firstName) throws InvalidInputException{
 
         if (i_firstName.isBlank()){
             throw new InvalidInputException("BLANK SPACE INPUT");
@@ -202,7 +206,7 @@ public class Patient {
      * Setter method for last name
      * @param i_lastName
      */
-    public void changeLastName(String i_lastName) throws InvalidInputException{
+    public void setLastName(String i_lastName) throws InvalidInputException{
 
         if (i_lastName.isBlank()){
             throw new InvalidInputException("BLANK SPACE INPUT");
@@ -218,10 +222,10 @@ public class Patient {
      * @param i_firstName
      * @param i_lastName
      */
-    public void changeName(String i_firstName, String i_lastName) throws InvalidInputException{
+    public void setName(String i_firstName, String i_lastName) throws InvalidInputException{
 
-        changeFirstName(i_firstName);
-        changeLastName(i_lastName);
+        setFirstName(i_firstName);
+        setLastName(i_lastName);
 
     }
 
@@ -232,6 +236,17 @@ public class Patient {
     public void setBloodType(BloodType i_bloodType){
 
         bloodType = i_bloodType;
+
+    }
+
+
+    /**
+     * Setter method for patient's sex
+     * @param i_sex
+     */
+    public void setSex(Sex i_sex){
+
+        sex = i_sex;
 
     }
 
@@ -304,6 +319,17 @@ public class Patient {
     }
 
     /**
+     * Getter method for patient's sex
+     * @return Sex Object
+     */
+    public Sex getSex(){
+
+        return sex;
+
+    }
+
+
+    /**
      * Adds visited date to patient object using the values of month, day and year
      * @param month
      * @param day
@@ -372,8 +398,8 @@ public class Patient {
 
         return(
 
-        i_patient.getFirstName() == this.firstName &&
-        i_patient.getLastName() == this.lastName &&
+        i_patient.getFirstName().equalsIgnoreCase(this.firstName) &&
+        i_patient.getLastName().equalsIgnoreCase(this.lastName) &&
         i_patient.getDateOfBirth().equals(this.dateOfBirth)
 
         );
@@ -384,15 +410,12 @@ public class Patient {
         System.out.println(datesVisited());
     }
 
-    /**
-     * Saves Patient Data in SQL Database and in Visited Dates Text File
-     */
-    public void savePatientData() throws SQLException, IOException{
+    public ArrayList<Date> getDatesVisitedArrayList(){
 
-        DatabaseManager.addRecord(this);
-        recordPatientDates();
+        return datesVisited;
 
     }
+
 
 
 

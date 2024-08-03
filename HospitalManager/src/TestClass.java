@@ -15,6 +15,7 @@ import DataManagingClasses.DatabaseManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 import java.sql.ResultSet;
 import java.sql.DriverManager;
 
@@ -23,7 +24,7 @@ public class TestClass {
     
     public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException{
 
-        
-        
+        System.out.print(DatabaseManager.datesResultTable(0));
+
     }
 }

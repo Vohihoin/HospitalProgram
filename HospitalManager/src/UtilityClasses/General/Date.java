@@ -1,5 +1,10 @@
 package UtilityClasses.General;
 
+/**
+ * Date Object for Managing Dates
+ * 
+ * @author Ohihoin Vahe
+ */
 public class Date {
 
     

@@ -1,0 +1,51 @@
+Date : 2024-06-09 19:05:54
+Directory : c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager
+Total : 14 files,  137 codes, 131 comments, 89 blanks, all 357 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Java     |         12 |        152 |        131 |         94 |        377 |
+| Markdown |          1 |         -2 |          0 |         -1 |         -3 |
+| SQL      |          1 |        -13 |          0 |         -4 |        -17 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                                      | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                                         |         14 |        137 |        131 |         89 |        357 |
+| ..                                                                                                                                                        |          2 |        -15 |          0 |         -5 |        -20 |
+| .. (Files)                                                                                                                                                |          1 |         -2 |          0 |         -1 |         -3 |
+| ..\HospitalProgramSQLFiles                                                                                                                                |          1 |        -13 |          0 |         -4 |        -17 |
+| src                                                                                                                                                       |         12 |        152 |        131 |         94 |        377 |
+| src (Files)                                                                                                                                               |          3 |         82 |         38 |         54 |        174 |
+| src\DataManagingClasses                                                                                                                                   |          2 |         78 |         35 |         43 |        156 |
+| src\DatabaseClasses                                                                                                                                       |          1 |        -57 |        -28 |        -31 |       -116 |
+| src\UtilityClasses                                                                                                                                        |          6 |         49 |         86 |         28 |        163 |
+| src\UtilityClasses\Enums                                                                                                                                  |          1 |          5 |          5 |          4 |         14 |
+| src\UtilityClasses\Exceptions                                                                                                                             |          2 |         14 |          5 |         11 |         30 |
+| src\UtilityClasses\General                                                                                                                                |          3 |         30 |         76 |         13 |        119 |
++-----------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                                                                  | language | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\DataManagingClasses\DatabaseManager.java                | Java     |         68 |         35 |         37 |        140 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\DataManagingClasses\DatesVisitedManager.java            | Java     |         10 |          0 |          6 |         16 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\DatabaseClasses\DatabaseManager.java                    | Java     |        -57 |        -28 |        -31 |       -116 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\JavaFXTest.java                                         | Java     |          4 |          0 |          4 |          8 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\Main.java                                               | Java     |         78 |         38 |         47 |        163 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\TestClass.java                                          | Java     |          0 |          0 |          3 |          3 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\Enums\Sex.java                           | Java     |          5 |          5 |          4 |         14 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\Exceptions\InvalidInputException.java    | Java     |          7 |          0 |          6 |         13 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\Exceptions\PatientNotFoundException.java | Java     |          7 |          5 |          5 |         17 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\General\Date.java                        | Java     |          7 |          5 |          2 |         14 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\General\DateDifference.java              | Java     |          0 |          2 |          0 |          2 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\General\Patient.java                     | Java     |         23 |         69 |         11 |        103 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalProgramSQLFiles\CreatingTestDatabase.sql                            | SQL      |        -13 |          0 |         -4 |        -17 |
+| c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\README.md                                                                   | Markdown |         -2 |          0 |         -1 |         -3 |
+| Total                                                                                                                                                     |          |        137 |        131 |         89 |        357 |
++-----------------------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

@@ -1,0 +1,15 @@
+"filename", "language", "Java", "comment", "blank", "total"
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\DataManagingClasses\DatabaseManager.java", "Java", 68, 35, 37, 140
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\DataManagingClasses\DatesVisitedManager.java", "Java", 10, 0, 6, 16
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\JavaFXTest.java", "Java", 4, 0, 4, 8
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\Main.java", "Java", 185, 51, 93, 329
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\TestClass.java", "Java", 16, 0, 14, 30
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\Enums\BloodType.java", "Java", 66, 0, 16, 82
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\Enums\MaritalStatus.java", "Java", 38, 7, 9, 54
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\Enums\Sex.java", "Java", 5, 5, 4, 14
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\Exceptions\InvalidInputException.java", "Java", 7, 0, 6, 13
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\Exceptions\PatientNotFoundException.java", "Java", 7, 5, 5, 17
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\General\Date.java", "Java", 278, 32, 108, 418
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\General\DateDifference.java", "Java", 27, 15, 16, 58
+"c:\Users\Vahe Ohihoin\Desktop\Robotics\Personal Java Projects\HospitalProgram\HospitalManager\src\UtilityClasses\General\Patient.java", "Java", 161, 132, 108, 401
+"Total", "-", 872, 282, 426, 1580

@@ -1,7 +1,7 @@
 create database patient_data;
 use patient_data;
 
-create table patient_info(
+create table t_patients(
 
 patient_ID int primary key,
 first_name varchar(25),
@@ -12,6 +12,6 @@ marital_status char(1)
 
 );
 
-insert into patient_info values
-(1, "vahe", "ohihoin", "2007-08-08", "A+", "S");
+insert into patients values
+(1, "VAHE", "OHIHOIN", "2007-08-08", "A+", "S", "M");
 select * from patient_info;
