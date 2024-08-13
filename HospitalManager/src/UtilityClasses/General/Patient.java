@@ -11,6 +11,7 @@ import DataManagingClasses.DatabaseManager;
 import UtilityClasses.Enums.BloodType;
 import UtilityClasses.Enums.MaritalStatus;
 import UtilityClasses.Enums.Sex;
+import UtilityClasses.Exceptions.InvalidDateException;
 import UtilityClasses.Exceptions.InvalidInputException;
 
 import java.util.ArrayList;
@@ -162,13 +163,12 @@ public class Patient {
      * Returns the patient's age using their date of birth
      * @return
      */
-    public int getAge(){
+    public int getAge() throws InvalidDateException{
         // Create a local date object using the java time class
         LocalDate currDate = LocalDate.now();
         
         // Current date as a date object
         Date currentDate = new Date(currDate.getMonthValue(), currDate.getDayOfMonth(), currDate.getYear());
-
         //Finds the difference from the current date to date of birth
         DateDifference dDifference = currentDate.differenceToDate(dateOfBirth);
         
@@ -335,7 +335,7 @@ public class Patient {
      * @param day
      * @param year
      */
-    public void addVisitedDate(int month, int day, int year){
+    public void addVisitedDate(int month, int day, int year) throws InvalidDateException{
 
         if (Date.validDate(month, day, year)){
             datesVisited.add(new Date(month, day, year));

@@ -1,5 +1,7 @@
 package UtilityClasses.General;
 
+import UtilityClasses.Exceptions.InvalidDateException;
+
 /**
  * Date Object for Managing Dates
  * 
@@ -26,21 +28,21 @@ public class Date {
      * @param i_day Input Date
      * @param i_year Input Year 
      */
-    public Date(int i_month, int i_day, int i_year){
+    public Date(int i_month, int i_day, int i_year) throws InvalidDateException{
 
     
         if (i_month <= 12 && i_month >= 1){
             month = i_month;
         }
         else{
-            month = 1;
+            throw new InvalidDateException();
         }
 
         if (i_year >= 0){
             year = i_year;
         }
         else{
-            year = 2000;
+            throw new InvalidDateException();
         }
 
         boolean thirtyMonth = (month == 9) || (month == 4) || (month == 6) || (month == 11);
@@ -54,7 +56,7 @@ public class Date {
     
         if (i_day < 1){
 
-            day = 1;
+            throw new InvalidDateException();
 
         }
         else{
@@ -64,7 +66,7 @@ public class Date {
                     day = i_day;
                 }
                 else{
-                    day = 1;
+                    throw new InvalidDateException();
                 }
             }
 
@@ -73,7 +75,7 @@ public class Date {
                     day = i_day;
                 }
                 else{
-                    day = 1;
+                    throw new InvalidDateException();
                 }
             }
 
@@ -82,7 +84,7 @@ public class Date {
                     day = i_day;
                 }
                 else{
-                    day = 1;
+                    throw new InvalidDateException();
                 }
             }
 
@@ -92,7 +94,7 @@ public class Date {
                     day = i_day;
                 }
                 else{
-                    day = 1;
+                    throw new InvalidDateException();
                 }
 
             }
@@ -370,7 +372,7 @@ public class Date {
      * @param databaseString
      * @return
      */
-    public static Date dateFromDBString(String databaseString){
+    public static Date dateFromDBString(String databaseString) throws InvalidDateException{
         int i;
 
         try{
@@ -398,7 +400,7 @@ public class Date {
 
     }
 
-    public static Date dateFromTxtFileString(String textString){
+    public static Date dateFromTxtFileString(String textString) throws InvalidDateException{
 
         try{
             int month = Integer.parseInt(textString.substring(0,2));

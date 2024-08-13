@@ -51,9 +51,9 @@ UPDATE dates
 SET patient_ID = 0 
 WHERE patient_ID = 1;
 
-UPDATE t_patients
-SET patient_ID = 1 
-WHERE patient_ID = 3;
+UPDATE patients
+SET patient_ID = 2 
+WHERE patient_ID = 6;
 
  
 
@@ -63,21 +63,22 @@ patient_ID = 5;
 
 SELECT * FROM patients;
 
-patient_ID = 6;
 
 
-create table t_patient_dates (
+create table dates (
 
 date_ID int,
 date_visited date,
 patient_ID int,
 PRIMARY KEY (date_ID),
-FOREIGN KEY (patient_ID) REFERENCES t_patients(patient_ID)
+FOREIGN KEY (patient_ID) REFERENCES patients(patient_ID)
 
-)
-;
+);
+
 ALTER TABLE t_patient_dates	DROP FOREIGN KEY patient_ID;
 ALTER TABLE t_patient_dates DROP COLUMN patient_ID;
+
+ALTER TABLE t_patient_dates RENAME t_dates;
 
 DROP TABLE t_patient_dates;
 TRUNCATE TABLE dates;

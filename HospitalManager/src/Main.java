@@ -13,6 +13,7 @@ import DataManagingClasses.DatabaseManager;
 import UtilityClasses.Enums.BloodType;
 import UtilityClasses.Enums.MaritalStatus;
 import UtilityClasses.Enums.Sex;
+import UtilityClasses.Exceptions.InvalidDateException;
 import UtilityClasses.Exceptions.InvalidInputException;
 import UtilityClasses.Exceptions.LoadInException;
 import UtilityClasses.Exceptions.PatientNotFoundException;
@@ -24,15 +25,15 @@ public class Main {
     // Made the patient's array list a global variable
     public static ArrayList<Patient> patients;
 
-    public static void main(String[] args) throws SQLException, IOException, PatientNotFoundException, InvalidInputException{
+    public static void main(String[] args) throws SQLException, IOException, PatientNotFoundException, InvalidInputException, InvalidDateException{
 
 
         patients = loadPatients(); 
         int i;
 
-        for (i=0; i < patients.size(); i++){
+        for (Patient patient: patients){
             
-            System.out.println(patients.get(i));
+            System.out.println(patient);
 
         }
 
@@ -40,9 +41,9 @@ public class Main {
         addPatient("Aigbe", "Ohihoin", new Date(4, 13, 1975), BloodType.A_POSITIVE, MaritalStatus.MARRIED, Sex.MALE);
         addPatient("Hephzibah", "Ohihoin", new Date(12, 8, 2004), BloodType.A_POSITIVE, MaritalStatus.SINGLE, Sex.FEMALE);
 
-        for (i=0; i < patients.size(); i++){
+        for (Patient patient: patients){
             
-            System.out.println(patients.get(i));
+            System.out.println(patient);
 
         }
 
@@ -60,7 +61,6 @@ public class Main {
      */
     public static ArrayList<Patient> loadPatients() throws SQLException, IOException, PatientNotFoundException{
 
-        String tableName = "patient_info";
         String currentLine;
         int counter = 0;
 
@@ -128,7 +128,14 @@ public class Main {
                 }
 
                 if (unitReader.hasNext()){
-                    dateOfBirth = Date.dateFromDBString(unitReader.next());
+                    try{
+                        dateOfBirth = Date.dateFromDBString(unitReader.next());
+                    }
+                    catch(InvalidDateException e){
+                        // Dates shouldn't be invalid because they won't be created and added to the database if invalid but just incase
+                        // we have this exception handling
+                    }
+                    dateOfBirth = null;
                 }
                 else{
                     inputError = true;
@@ -182,10 +189,19 @@ public class Main {
 
                         if (unitReader.hasNextInt()){
 
-                            unitReader.nextInt();
-                            inputDate = Date.dateFromDBString(unitReader.next());
-                            inputPatient.addVisitedDate(inputDate);
-                            
+                            unitReader.nextInt(); // basically just gets and clears the date ID
+
+                            String dateDBString = unitReader.next();
+                            try{
+                                
+                                inputDate = Date.dateFromDBString(dateDBString);
+                                inputPatient.addVisitedDate(inputDate);
+                            }
+                            catch(InvalidDateException e){
+                                // Dates shouldn't be invalid because they won't be created and added to the database if invalid but just incase
+                                // we have this exception handling
+                                System.out.println("Issue Loading Date: " + dateDBString);
+                            }                          
                         }
                         else{
                             inputError = true;
