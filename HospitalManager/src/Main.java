@@ -19,35 +19,31 @@ import UtilityClasses.Exceptions.LoadInException;
 import UtilityClasses.Exceptions.PatientNotFoundException;
 import UtilityClasses.General.Date;
 import UtilityClasses.General.Patient;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application{
 
     // Made the patient's array list a global variable
     public static ArrayList<Patient> patients;
 
+
+    public void start(Stage primStage) throws IOException, SQLException, PatientNotFoundException{
+
+        
+
+        Scene startingScene = FXMLLoader.load(getClass().getResource("HospitalManager\\src\\FXScenes\\MainPage.fxml"));
+        
+        primStage.setScene(startingScene);
+        primStage.show();
+
+    }
+
     public static void main(String[] args) throws SQLException, IOException, PatientNotFoundException, InvalidInputException, InvalidDateException{
 
-
-        patients = loadPatients(); 
-        int i;
-
-        for (Patient patient: patients){
-            
-            System.out.println(patient);
-
-        }
-
-
-        addPatient("Aigbe", "Ohihoin", new Date(4, 13, 1975), BloodType.A_POSITIVE, MaritalStatus.MARRIED, Sex.MALE);
-        addPatient("Hephzibah", "Ohihoin", new Date(12, 8, 2004), BloodType.A_POSITIVE, MaritalStatus.SINGLE, Sex.FEMALE);
-
-        for (Patient patient: patients){
-            
-            System.out.println(patient);
-
-        }
-
-        saveData();
+        launch(args);
 
     }
 
