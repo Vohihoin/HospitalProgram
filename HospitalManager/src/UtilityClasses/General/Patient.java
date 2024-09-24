@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 
 /**
+ * Patient
  * Patient Class to represent patient's informations
- * 
  * @author Ohihoin Vahe
  * @param firstName Patient's First Name
  * @param lastName Patient's Last Name

@@ -1,8 +1,8 @@
 package UtilityClasses.Enums;
 
 /**
+ * Sex
  * Enum for keeping record of the patient's sex
- * 
  * @author Ohihoin Vahe
  */
 public enum Sex {

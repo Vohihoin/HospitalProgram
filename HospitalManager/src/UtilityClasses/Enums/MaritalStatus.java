@@ -1,5 +1,9 @@
 package UtilityClasses.Enums;
-
+/**
+ * MaritalStatus
+ * Enum used to represent a person's marital status
+ * @author Ohihoin Vahe
+ */
 public enum MaritalStatus{
 
     SINGLE,

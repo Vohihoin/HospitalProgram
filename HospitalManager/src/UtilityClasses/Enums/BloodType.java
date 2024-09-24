@@ -1,5 +1,10 @@
 package UtilityClasses.Enums;
 
+/**
+ * BloodType
+ * Enum used to represent the blood_type of a person
+ * @author Ohihoin Vahe
+ */
 public enum BloodType {
     
     A_POSITIVE,

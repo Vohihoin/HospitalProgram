@@ -21,26 +21,39 @@ import UtilityClasses.General.Date;
 import UtilityClasses.General.Patient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application{
 
     // Made the patient's array list a global variable
     public static ArrayList<Patient> patients;
-
-
+    
+    
     public void start(Stage primStage) throws IOException, SQLException, PatientNotFoundException{
 
-        
+        patients = loadPatients(); 
+        printPatients();
 
-        Scene startingScene = FXMLLoader.load(getClass().getResource("HospitalManager\\src\\FXScenes\\MainPage.fxml"));
+        primStage.setTitle("Hospital Manager");
+        Image logo = new Image("Images\\HICILogo.png");
+        primStage.getIcons().add(logo);
+
+        Parent root = FXMLLoader.load(getClass().getResource("FXScenes\\FindPage.fxml"));
+        Scene startingScene = new Scene(root);
         
         primStage.setScene(startingScene);
         primStage.show();
 
     }
 
+    /**
+     * 
+     * 
+     */
     public static void main(String[] args) throws SQLException, IOException, PatientNotFoundException, InvalidInputException, InvalidDateException{
 
         launch(args);
@@ -59,6 +72,7 @@ public class Main extends Application{
 
         String currentLine;
         int counter = 0;
+        int counter2 = 0;
 
 
         String fullResults = DatabaseManager.returnPatientResultsTable(); // Gets the full results from the database management table
@@ -81,6 +95,8 @@ public class Main extends Application{
         Sex sex = null;
         boolean inputError = false;
         Patient inputPatient = null;
+        String errorMessage;
+        
         
         Date inputDate;
 
@@ -94,6 +110,7 @@ public class Main extends Application{
              */
 
             currentLine = lineReader.nextLine();
+            errorMessage = "LINE "+counter+"\n";
             counter += 1;
 
             // Makes sure line isn't empty
@@ -107,6 +124,7 @@ public class Main extends Application{
                 }
                 else{
                     inputError = true;
+                    errorMessage += "NO PATIENT ID\n";
                 }
                 
                 if (unitReader.hasNext()){
@@ -114,6 +132,7 @@ public class Main extends Application{
                 }
                 else{
                     inputError = true;
+                    errorMessage += "NO FIRST NAME\n";
                 }
 
                 if (unitReader.hasNext()){
@@ -121,6 +140,7 @@ public class Main extends Application{
                 }
                 else{
                     inputError = true;
+                    errorMessage += "NO LAST NAME\n";
                 }
 
                 if (unitReader.hasNext()){
@@ -128,13 +148,13 @@ public class Main extends Application{
                         dateOfBirth = Date.dateFromDBString(unitReader.next());
                     }
                     catch(InvalidDateException e){
-                        // Dates shouldn't be invalid because they won't be created and added to the database if invalid but just incase
-                        // we have this exception handling
+                       errorMessage += "INVALID INPUT DATE OF BIRTH\n";
+                        inputError = true;
                     }
-                    dateOfBirth = null;
                 }
                 else{
                     inputError = true;
+                    errorMessage += "NO DATE OF BIRTH\n";
                 }
 
                 if (unitReader.hasNext()){
@@ -142,6 +162,7 @@ public class Main extends Application{
                 }
                 else{
                     inputError = true;
+                    errorMessage += "NO VALID BLOODTYPE\n";
                 }
                 
                 if (unitReader.hasNext()){
@@ -149,6 +170,7 @@ public class Main extends Application{
                 }
                 else{
                     inputError = true;
+                    errorMessage += "NO VALID MARITAL STATUS\n";
                 }
 
                 if (unitReader.hasNext()){
@@ -156,6 +178,7 @@ public class Main extends Application{
                 }
                 else{
                     inputError = true;
+                    errorMessage += "NO VALID SEX\n";
                 }
 
 
@@ -163,7 +186,7 @@ public class Main extends Application{
                 // Checks if there were any errors; if there are none, it creates the patient object
 
                 if (inputError){
-                    System.out.println("INPUT ERROR WHEN LOADING FROM ROW "+ counter);
+                    System.err.println(errorMessage);
                 }
                 else{
                     inputPatient = new Patient(patientID, firstName, lastName, dateOfBirth, bloodType, maritalStatus, sex);
@@ -178,10 +201,12 @@ public class Main extends Application{
 
                     String resultString = DatabaseManager.datesResultTable(inputPatient.getPatientID());
                     datesLineReader = new Scanner(resultString);
+                    counter2 = 0;
 
                     while (datesLineReader.hasNextLine()){
                         
                         unitReader = new Scanner(datesLineReader.nextLine());
+                        counter2 += 1;
 
                         if (unitReader.hasNextInt()){
 
@@ -192,28 +217,27 @@ public class Main extends Application{
                                 
                                 inputDate = Date.dateFromDBString(dateDBString);
                                 inputPatient.addVisitedDate(inputDate);
+
                             }
                             catch(InvalidDateException e){
-                                // Dates shouldn't be invalid because they won't be created and added to the database if invalid but just incase
-                                // we have this exception handling
-                                System.out.println("Issue Loading Date: " + dateDBString);
+
+                                // If the date is invalid we print to the error stream for debugginh
+                                System.err.printf("ISSUE LOADING DATE %d FOR PATIENT %d\n", counter2, counter);
+
                             }                          
                         }
                         else{
-                            inputError = true;
+                            System.err.printf("ISSUE LOADING DATE %d FOR PATIENT %d\n", counter2, counter);
                         }                 
 
                     }
+
                     // Finally add patient object to the array list
                     patients.add(inputPatient);
 
                 }
 
-
-                
-
             }
-
 
         }
 
@@ -483,6 +507,19 @@ public class Main extends Application{
             }
         }
         return 1;
+
+    }
+
+    /**
+     * Private utility method for printing the patients in the arraylist.
+     * 
+     * @return nothing
+     */
+    private static void printPatients(){
+
+        for (Patient patient: patients){
+            System.out.println(patient);
+        }
 
     }
     

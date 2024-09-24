@@ -1,30 +1,28 @@
 package DataManagingClasses;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.print.event.PrintJobAttributeEvent;
-import javax.swing.event.SwingPropertyChangeSupport;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import com.mysql.cj.jdbc.Driver;
 
 import UtilityClasses.General.Date;
 import UtilityClasses.General.Patient;
 
 
 /**
- * This class is only used staticly to perform certain database functions and receive certain database information
+ * Database Manager
+ * This class is used staticly to perform certain database functions and receive and transmit information from and to databases
+ * 
+ * @author Ohihoin Vahe
  */
 public class DatabaseManager{
 
-    private static String databaseName = "patient_data";
-    private static String url = "jdbc:mysql://localhost:3306/" + databaseName;
-    private static String username = "root";
-    private static String passcode = "#englog1N12345";
+    private final static String databaseName = "patient_data";
+    private final static String url = "jdbc:mysql://localhost:3306/" + databaseName;
+    private final static String username = "root";
+    private final static String passcode = "#englog1N12345"; // need to make this a stored value in a database
     
     /**
      * Creates a connection object that can be used to make statements
@@ -40,11 +38,19 @@ public class DatabaseManager{
         Class.forName("com.mysql.cj.jdbc.Driver");
         }
         catch(ClassNotFoundException exception){
-            System.out.print("SQL ERROR IN DATABASE MANAGER CLASS");
+
+            System.out.print("ERROR WHILE LOADING SQL DRIVER CLASS: ");
+            System.out.println(exception.getMessage());
+            
+
         }
         
         Connection con = DriverManager.getConnection(url, username, passcode);
+        
+
         return con;
+
+        
 
     }
 
@@ -248,7 +254,7 @@ public class DatabaseManager{
     }
 
     /**
-     * Returns a result string of the results from the date table with the appropriate patient ID
+     * Takes in a patient's patientID and returns a string of all the dates they've visited
      * 
      * @return String
      * @throws SQLException
@@ -263,6 +269,7 @@ public class DatabaseManager{
         String lineString = "";
         String returnString = "";
 
+        // results 1 just tells us how many columns there are
         ResultSet results1 = workingStatement.executeQuery(String.format("SELECT COUNT(*) AS NUMBER_OF_COLUMNS  FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = \"%s\";", tableName));
         results1.next(); // Cursor of rows starts before the first row. So, this moves the cursor to the first row
         int numOfColumns = results1.getInt(1); // First Row in a table is 1

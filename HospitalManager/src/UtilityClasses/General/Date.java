@@ -3,8 +3,8 @@ package UtilityClasses.General;
 import UtilityClasses.Exceptions.InvalidDateException;
 
 /**
+ * Date
  * Date Object for Managing Dates
- * 
  * @author Ohihoin Vahe
  */
 public class Date {
