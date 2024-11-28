@@ -5,10 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import com.mysql.cj.jdbc.Driver;
-
+//import com.mysql.cj.jdbc.Driver;
 import UtilityClasses.General.Date;
-import UtilityClasses.General.Patient;
+import UtilityClasses.General.Patient.Patient;
 
 
 /**
@@ -20,7 +19,9 @@ import UtilityClasses.General.Patient;
 public class DatabaseManager{
 
     private final static String databaseName = "patient_data";
-    private final static String url = "jdbc:mysql://localhost:3306/" + databaseName;
+    private final static String url = "jdbc:mysql://localhost:3306/" + databaseName; 
+    // your url is the most key part. your url essentially defines where your program is stored (local or cloud) and what database you're looking into. 
+    //So all you have to do is know where your database is stored and what its name is
     private final static String username = "root";
     private final static String passcode = "#englog1N12345"; // need to make this a stored value in a database
     
@@ -41,7 +42,6 @@ public class DatabaseManager{
 
             System.out.print("ERROR WHILE LOADING SQL DRIVER CLASS: ");
             System.out.println(exception.getMessage());
-            
 
         }
         

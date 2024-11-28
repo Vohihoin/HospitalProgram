@@ -1,8 +1,11 @@
+package MainFiles;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 import javax.xml.crypto.Data;
@@ -10,6 +13,8 @@ import javax.xml.crypto.Data;
 import com.mysql.cj.conf.ConnectionUrlParser.Pair;
 
 import DataManagingClasses.DatabaseManager;
+import JavaFX.Controller;
+import UtilityClasses.DataStructures.BinarySearchStuff.BinarySearchTree;
 import UtilityClasses.Enums.BloodType;
 import UtilityClasses.Enums.MaritalStatus;
 import UtilityClasses.Enums.Sex;
@@ -18,35 +23,56 @@ import UtilityClasses.Exceptions.InvalidInputException;
 import UtilityClasses.Exceptions.LoadInException;
 import UtilityClasses.Exceptions.PatientNotFoundException;
 import UtilityClasses.General.Date;
-import UtilityClasses.General.Patient;
+import UtilityClasses.General.Patient.Patient;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import java.net.URI;
+import java.net.URL;
 
 public class Main extends Application{
 
     // Made the patient's array list a global variable
     public static ArrayList<Patient> patients;
+    public static Stage primStage;
+    public static Scene currentScene;
     
     
+    @Override
     public void start(Stage primStage) throws IOException, SQLException, PatientNotFoundException{
 
         patients = loadPatients(); 
-        printPatients();
+        Main.primStage = primStage;
 
-        primStage.setTitle("Hospital Manager");
+        Main.primStage.setTitle("Hospital Manager");
         Image logo = new Image("Images\\HICILogo.png");
-        primStage.getIcons().add(logo);
+        Main.primStage.getIcons().add(logo);
+             
+        //String css = "JavaFX//generalstyle.css"; 
+        String url = "..//JavaFX//NewPage.fxml";
+        Parent baseRoot = FXMLLoader.load(getClass().getResource(url));
 
-        Parent root = FXMLLoader.load(getClass().getResource("FXScenes\\FindPage.fxml"));
-        Scene startingScene = new Scene(root);
+        Scene  baseScene = new Scene(baseRoot);
+        //baseScene.getStylesheets().add(css);
+
+        setScene(baseScene);
+        Main.primStage.show();
         
-        primStage.setScene(startingScene);
-        primStage.show();
+    }
+
+    /**
+     * Sets the scene
+     * @param scene
+     */
+    public void setScene(Scene scene){
+
+        Main.primStage.setScene(scene);
+        Main.currentScene = scene;
 
     }
 
@@ -55,9 +81,16 @@ public class Main extends Application{
      * 
      */
     public static void main(String[] args) throws SQLException, IOException, PatientNotFoundException, InvalidInputException, InvalidDateException{
-
         launch(args);
+    }
 
+    public static BinarySearchTree<Patient> loadPatientsIntoBinarySearchTree(ArrayList<Patient> patients){
+        Collections.shuffle(patients);
+        BinarySearchTree<Patient> patientTree = new BinarySearchTree<Patient>(); 
+        for (Patient patient : patients){
+            patientTree.addElement(patient);
+        }
+        return patientTree;
     }
 
     /**
@@ -299,9 +332,9 @@ public class Main extends Application{
      * Finds all the patient's with the given first name
      * @param i_firstName
      * @return Patient Array List
-     * @throws PatientNotFoundException
+
      */
-    public static ArrayList<Patient> findPatientsWithFirstName(String i_firstName) throws PatientNotFoundException{
+    public static ArrayList<Patient> findPatientsWithFirstName(String i_firstName){
 
         ArrayList<Patient> allPatients = new ArrayList<>();
         for (Patient patient: patients){
@@ -314,14 +347,49 @@ public class Main extends Application{
             }
 
         }
+        return allPatients;
+    }
 
-        if (allPatients.isEmpty()){
-            throw new PatientNotFoundException("CAN'T FIND ANY PATIENTS WITH NAME: " + i_firstName);
-        }
-        else{
-            return allPatients;
+
+    public static ArrayList<Patient> findPatients(String firstName, String lastName){
+
+        ArrayList<Patient> toReturn = new ArrayList<Patient>();
+
+        // CASE 1: Both fields are blank, we return our full list
+        if (firstName.isBlank() && lastName.isBlank()){ 
+            toReturn.addAll(patients);
+            return toReturn;
         }
 
+        // CASE 2: If only the first name has a field, we looked based only on the first name
+        if (!(firstName.isBlank()) && lastName.isBlank()){
+            for (Patient patient : patients){
+                if (patient.getFirstName().toLowerCase().startsWith(firstName.toLowerCase())){
+                    toReturn.add(patient);
+                }
+            }
+            return toReturn;
+        }
+
+        // CASE 3: If only the last name has a field, we look based only on the last name
+        if (!(lastName.isBlank()) && firstName.isBlank()){
+            for (Patient patient : patients){
+                if (patient.getLastName().toLowerCase().startsWith(lastName.toLowerCase())){
+                    toReturn.add(patient);
+                }
+            }
+            return toReturn;
+        }
+
+        // CASE 4: Otherwise, we check based on both first and last name
+        for (Patient patient : patients){
+            if (patient.getFirstName().toLowerCase().startsWith(firstName.toLowerCase()) &&
+                patient.getLastName().toLowerCase().startsWith(lastName.toLowerCase())){
+                toReturn.add(patient);
+            }
+        }
+
+        return toReturn;
     }
 
     /**
@@ -405,53 +473,11 @@ public class Main extends Application{
 
     }
 
-    /**
-     * Adds a patient to the working patient arraylist
-     * Returns 1 if patient was added successfully, else returns 0
-     * @param i_firstName
-     * @param i_lastName
-     * @param i_dateOfBirth
-     * @return
-     * @throws IOException
-     * @throws InvalidInputException
-     */
-    private static int addPatient(String i_firstName, String i_lastName, Date i_dateOfBirth) throws IOException, InvalidInputException{
 
-        Patient i_patient = new Patient(i_firstName, i_lastName, i_dateOfBirth);
-
-        File numOfRecordsFile = new File("HospitalManager\\src\\TextFiles\\NumberOfRecords.txt");
-        Scanner numOfRecordsReader = new Scanner(numOfRecordsFile);
-        int numOfRecords = numOfRecordsReader.nextInt();
-
-        
-
-        // Checks for duplicate patients
-        for (Patient patient: patients){
-
-            if (patient.equals(i_patient)){
-                // If there is a duplicate patient, we don't want the addition to count, so
-                // we remove the record added count from the NumberOfRecords.txt file
-
-                numOfRecords -= 1;
-                PrintWriter pw = new PrintWriter(numOfRecordsFile);
-                pw.write(numOfRecords);
-                pw.close();
-                numOfRecordsReader.close();
-                return 0;
-
-            }
-
-        }
-
-        patients.add(i_patient);
-        numOfRecordsReader.close();
-        return 1;
-
-    }
 
     /**
      * Adds a patient to the working patient arraylist
-     * Returns 1 if patient was added successfully, else returns 0
+     * 
      * @param i_firstName
      * @param i_lastName
      * @param i_dateOfBirth
@@ -460,15 +486,11 @@ public class Main extends Application{
      * @param i_sex
      * @return
      * @throws IOException
-     * @throws InvalidInputException
+     * @throws InvalidInputException if patient is already in the records
      */
-    private static int addPatient(String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus, Sex i_sex) throws IOException, InvalidInputException{
+    private static void addPatient(String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus, Sex i_sex) throws IOException, InvalidInputException{
 
         Patient i_patient = new Patient(i_firstName, i_lastName, i_dateOfBirth, i_bloodType, i_maritalStatus, i_sex);
-
-        File numOfRecordsFile = new File("HospitalManager\\src\\TextFiles\\NumberOfRecords.txt");
-        Scanner numOfRecordsReader = new Scanner(numOfRecordsFile);
-        int numOfRecords = numOfRecordsReader.nextInt();
 
         // Checks for duplicate patients
         for (Patient patient: patients){
@@ -476,22 +498,15 @@ public class Main extends Application{
             if (patient.equals(i_patient)){
                 // If there is a duplicate patient, we don't want the addition to count, so
                 // we remove the record added count from the NumberOfRecords.txt file
+                throw new InvalidInputException("Patient Already Exists");
 
-                numOfRecords -= 1;
-                PrintWriter pw = new PrintWriter(numOfRecordsFile);
-                pw.print(numOfRecords);
-                pw.close();
-                numOfRecordsReader.close();
-                return 0;
             }
-
         }
 
         patients.add(i_patient);
-        numOfRecordsReader.close();
-        return 1;
         
     }
+
     /**
      * Adds a visited date to a patient's record
      * Returns 0 in the case of duplicate dates

@@ -1,21 +1,27 @@
-package UtilityClasses.General;
+package UtilityClasses.General.Patient;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
+
 import java.util.Scanner;
 
-import DataManagingClasses.DatabaseManager;
+import java.util.ArrayList;
+import java.time.LocalDate;
+
+import UtilityClasses.DataStructures.QueryStuff.Query;
+import UtilityClasses.DataStructures.QueryStuff.Queryable;
 import UtilityClasses.Enums.BloodType;
 import UtilityClasses.Enums.MaritalStatus;
 import UtilityClasses.Enums.Sex;
 import UtilityClasses.Exceptions.InvalidDateException;
 import UtilityClasses.Exceptions.InvalidInputException;
+import UtilityClasses.General.Date;
+import UtilityClasses.General.DateDifference;
+import UtilityClasses.General.Record;
 
-import java.util.ArrayList;
-import java.time.LocalDate;
+
 
 /**
  * Patient
@@ -27,12 +33,13 @@ import java.time.LocalDate;
  * @param dateOFBirth Patient's Date of Birth
  * 
 */
-public class Patient {
+public class Patient implements Comparable<Patient>, Queryable<Patient>{
 
     // Static Record Keeping Variables
     private static File recordsFile = new File("HospitalManager\\src\\TextFiles\\NumberOfRecords.txt");
     private static File visitedDatesFile = new File("HospitalManager\\src\\TextFiles\\VisitedDates.txt");
     private static int numOfRecords;
+    
     
     // Basic Patient Variables
     private String firstName;
@@ -46,6 +53,7 @@ public class Patient {
 
     // More complex information on patients
     private ArrayList<Date> datesVisited = new ArrayList<Date>();
+    private ArrayList<Record> records;
 
 
 
@@ -57,7 +65,7 @@ public class Patient {
      * @param i_dateOfBirth Patient's Date of Birth as a date object
      * @throws IOException
      */
-    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth) throws IOException, InvalidInputException{
+    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth) throws IOException{
 
         
 
@@ -190,10 +198,10 @@ public class Patient {
      * Setter method for first name
      * @param i_firstName
      */
-    public void setFirstName(String i_firstName) throws InvalidInputException{
+    public void setFirstName(String i_firstName){
 
         if (i_firstName.isBlank()){
-            throw new InvalidInputException("BLANK SPACE INPUT");
+            throw new IllegalArgumentException("BLANK SPACE INPUT");
         }
         else{
             firstName = i_firstName.toUpperCase();
@@ -206,10 +214,10 @@ public class Patient {
      * Setter method for last name
      * @param i_lastName
      */
-    public void setLastName(String i_lastName) throws InvalidInputException{
+    public void setLastName(String i_lastName){
 
         if (i_lastName.isBlank()){
-            throw new InvalidInputException("BLANK SPACE INPUT");
+            throw new IllegalArgumentException("BLANK SPACE INPUT");
         }
         else{
             lastName = i_lastName.toUpperCase();
@@ -222,7 +230,7 @@ public class Patient {
      * @param i_firstName
      * @param i_lastName
      */
-    public void setName(String i_firstName, String i_lastName) throws InvalidInputException{
+    public void setName(String i_firstName, String i_lastName){
 
         setFirstName(i_firstName);
         setLastName(i_lastName);
@@ -415,6 +423,56 @@ public class Patient {
         return datesVisited;
 
     }
+
+
+    /**
+     * Returns a negative number if this patient comes before other patient (this < other)
+     * Returns a positive number if this patient comes after other patient (this > other)
+     * Returns 0 if the patients are equal comparism wise (same date of birth, and name)
+     * 
+     * Compare to primarly compares by date of birth; if two people have the same date of birth,
+     * they are compared by last name and if they have the same last name, they're compared by first name,
+     * and if they're compared by first name and they still have the same first name, the patients are 
+     * declared equal and compareTo returns 0.
+     * 
+     * @return a positive number, negative number, or zero depending on how the patients compare
+     */
+    @Override
+    public int compareTo(Patient otherPatient){
+        int dayDifferenceInAge = (new DateDifference(otherPatient.dateOfBirth, this.dateOfBirth)).magnitude();
+        if (dayDifferenceInAge != 0){
+            return dayDifferenceInAge;
+        }
+
+        // we first sort by date of birth, but if two patients have the same date of birth
+        // we compare them by last name, then first name
+
+        int lastNameDifference = this.lastName.compareToIgnoreCase(otherPatient.lastName);
+        if (lastNameDifference != 0){
+            return lastNameDifference;
+        }
+        "".compareTo(firstName);
+
+        int firstNameDifference = this.firstName.compareToIgnoreCase(otherPatient.firstName);
+        if (firstNameDifference != 0){
+            return firstNameDifference;
+        }
+        
+        return 0;
+        
+    }
+
+    @Override
+    public <Q extends Query<Patient>> boolean matches(Q query) {
+        return query.matches(this);
+    }
+
+
+    public static void main(String[] args) throws IOException{
+        Patient p = new Patient(null, null, null);
+    }
+
+
 
 
 

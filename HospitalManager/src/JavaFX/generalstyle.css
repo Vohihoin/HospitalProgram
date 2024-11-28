@@ -1,0 +1,14 @@
+.root{
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D21F3C;
+}
+
+.label{
+    -fx-font-size: 12;
+    -fx-font-family: "Constantia";
+    -fx-text-fill: #000000;
+}
+
+#menuBar{
+    -fx-background-color: #ADD8E6;
+}

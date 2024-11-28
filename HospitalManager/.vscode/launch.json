@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "QueryUtility",
+            "request": "launch",
+            "mainClass": "UtilityClasses.DataStructures.QueryStuff.QueryUtility",
+            "projectName": "HospitalManager_9d0c5f40"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "MainFiles.Main",
+            "projectName": "HospitalManager_9d0c5f40",
+            "vmArgs": "--module-path \"C:/Users/aigbe/OneDrive/Desktop/Robotics/InstalledJavaLibraries/javafx-sdk-22.0.2/lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "MainFiles.Main",
+            "projectName": "HospitalManager_9d0c5f40",
+            "vmArgs": "--module-path \"C:/Users/aigbe/OneDrive/Desktop/Robotics/InstalledJavaLibraries/javafx-sdk-22.0.2/lib\" --add-modules javafx.controls,javafx.fxml"
+        }
+    ]
+}
