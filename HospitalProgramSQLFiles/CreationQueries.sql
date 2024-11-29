@@ -44,3 +44,6 @@ PRIMARY KEY (date_ID),
 FOREIGN KEY (patient_ID) REFERENCES patients(patient_ID)
 
 );
+
+USE patient_data;
+SELECT * FROM patients;

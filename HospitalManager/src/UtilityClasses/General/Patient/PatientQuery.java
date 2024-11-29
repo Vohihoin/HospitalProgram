@@ -48,16 +48,19 @@ public class PatientQuery implements Query<Patient>{
     public void setFirstName(String firstName){
         if (firstName == null){
             this.firstName = null;
+            return;
         }
         if (firstName.isBlank()){
             throw new IllegalArgumentException();
         }
         this.firstName = firstName;
+        //System.out.println(firstName + this.firstName);
     }
 
     public void setLastName(String lastName){
         if (lastName == null){
-            this.firstName = null;
+            this.lastName = null;
+            return;
         }
         if (lastName.isBlank()){
             throw new IllegalArgumentException();
@@ -115,6 +118,11 @@ public class PatientQuery implements Query<Patient>{
                (sex == null || sex.equals(object.getSex()));
     }
 
+    /**
+     * Our query runs compare to using dateOfBirth
+     * @param otherPatient
+     * @return
+     */
     public int compareTo(Patient otherPatient){
 
         // Date of Birth is our primary sorting category, so if it is null, we can't do anything
@@ -125,6 +133,10 @@ public class PatientQuery implements Query<Patient>{
         int dayDifferenceInAge = (new DateDifference(otherPatient.getDateOfBirth(), this.dateOfBirth)).magnitude();
         return dayDifferenceInAge;
         
+    }
+
+    public String toString(){
+        return(firstName + " " + lastName + " " + dateOfBirth);
     }
 
     

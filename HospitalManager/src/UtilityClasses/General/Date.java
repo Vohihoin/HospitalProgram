@@ -1,5 +1,7 @@
 package UtilityClasses.General;
 
+import java.time.LocalDate;
+
 import UtilityClasses.Exceptions.InvalidDateException;
 
 /**
@@ -19,6 +21,12 @@ public class Date {
         day = 1;
         month = 1;
         year = 2000;
+    }
+
+    public Date(LocalDate date){
+        day = date.getDayOfMonth();
+        month = date.getMonthValue();
+        year = date.getYear();
     }
 
     /**Constructor for Date Object

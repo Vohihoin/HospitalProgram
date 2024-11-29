@@ -1,7 +1,7 @@
 package UtilityClasses.DataStructures.QueryStuff;
 import java.util.ArrayList;
 
-import UtilityClasses.DataStructures.BinarySearchTree;
+import UtilityClasses.DataStructures.BinarySearchStuff.BinarySearchTree;
 import UtilityClasses.General.Patient.Patient;
 import UtilityClasses.General.Patient.PatientQuery;
 

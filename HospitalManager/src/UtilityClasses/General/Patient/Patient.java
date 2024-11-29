@@ -36,7 +36,7 @@ import UtilityClasses.General.Record;
 public class Patient implements Comparable<Patient>, Queryable<Patient>{
 
     // Static Record Keeping Variables
-    private static File recordsFile = new File("HospitalManager\\src\\TextFiles\\NumberOfRecords.txt");
+    private static File recordsFile = new File("src\\TextFiles\\NumberOfRecords.txt");
     private static File visitedDatesFile = new File("HospitalManager\\src\\TextFiles\\VisitedDates.txt");
     private static int numOfRecords;
     
@@ -67,7 +67,6 @@ public class Patient implements Comparable<Patient>, Queryable<Patient>{
      */
     public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth) throws IOException{
 
-        
 
         setName(i_firstName, i_lastName);
         dateOfBirth = i_dateOfBirth;
@@ -468,9 +467,6 @@ public class Patient implements Comparable<Patient>, Queryable<Patient>{
     }
 
 
-    public static void main(String[] args) throws IOException{
-        Patient p = new Patient(null, null, null);
-    }
 
 
 

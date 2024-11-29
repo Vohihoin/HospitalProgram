@@ -2,6 +2,7 @@ package UtilityClasses.DataStructures.BinarySearchStuff;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.ArrayList;
 
 import UtilityClasses.DataStructures.QueryStuff.Query;
 import UtilityClasses.DataStructures.QueryStuff.Queryable;
@@ -266,6 +267,18 @@ public class BinarySearchTree <T extends Comparable<T> & Queryable<T>> implement
             curr = curr.getRight();
         }
         return curr.getData();
+    }
+
+    /**
+     * Returns an arraylist of the contents of the binary tree in ascending order
+     * @return
+     */
+    public ArrayList<T> asList(){
+        ArrayList<T> toReturn = new ArrayList<T>();
+        for (T element : this){
+            toReturn.add(element);
+        }
+        return toReturn;
     }
 
 }

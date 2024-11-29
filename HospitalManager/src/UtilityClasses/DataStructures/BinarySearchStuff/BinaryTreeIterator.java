@@ -11,6 +11,7 @@ public class BinaryTreeIterator <T extends Comparable<T> & Queryable<T>> impleme
     private T curr;
 
     public BinaryTreeIterator(BinarySearchTree<T> tree){
+        this.tree = tree;
         curr = tree.getMin();
     }
 

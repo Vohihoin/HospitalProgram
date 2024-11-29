@@ -24,6 +24,8 @@ import UtilityClasses.Exceptions.LoadInException;
 import UtilityClasses.Exceptions.PatientNotFoundException;
 import UtilityClasses.General.Date;
 import UtilityClasses.General.Patient.Patient;
+import UtilityClasses.General.Patient.PatientQuery;
+import UtilityClasses.General.Patient.PatientSearchTree;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,7 +40,7 @@ import java.net.URL;
 public class Main extends Application{
 
     // Made the patient's array list a global variable
-    public static ArrayList<Patient> patients;
+    public static PatientSearchTree patients;
     public static Stage primStage;
     public static Scene currentScene;
     
@@ -46,7 +48,7 @@ public class Main extends Application{
     @Override
     public void start(Stage primStage) throws IOException, SQLException, PatientNotFoundException{
 
-        patients = loadPatients(); 
+        patients = loadPatientsIntoBinarySearchTree(loadPatients()); 
         Main.primStage = primStage;
 
         Main.primStage.setTitle("Hospital Manager");
@@ -63,6 +65,11 @@ public class Main extends Application{
         setScene(baseScene);
         Main.primStage.show();
         
+    }
+
+    @Override
+    public void stop() throws SQLException, IOException{
+        saveData();
     }
 
     /**
@@ -84,9 +91,9 @@ public class Main extends Application{
         launch(args);
     }
 
-    public static BinarySearchTree<Patient> loadPatientsIntoBinarySearchTree(ArrayList<Patient> patients){
+    public static PatientSearchTree loadPatientsIntoBinarySearchTree(ArrayList<Patient> patients){
         Collections.shuffle(patients);
-        BinarySearchTree<Patient> patientTree = new BinarySearchTree<Patient>(); 
+        PatientSearchTree patientTree = new PatientSearchTree(); 
         for (Patient patient : patients){
             patientTree.addElement(patient);
         }
@@ -325,31 +332,8 @@ public class Main extends Application{
 
         throw new PatientNotFoundException("CAN'T FIND PATIENT WITH ID: " + i_patientID);
 
-
     }
     
-    /**
-     * Finds all the patient's with the given first name
-     * @param i_firstName
-     * @return Patient Array List
-
-     */
-    public static ArrayList<Patient> findPatientsWithFirstName(String i_firstName){
-
-        ArrayList<Patient> allPatients = new ArrayList<>();
-        for (Patient patient: patients){
-
-            if (
-                patient.getFirstName().equals(i_firstName.toUpperCase())
-            )
-            {
-                allPatients.add(patient);
-            }
-
-        }
-        return allPatients;
-    }
-
 
     public static ArrayList<Patient> findPatients(String firstName, String lastName){
 
@@ -357,7 +341,7 @@ public class Main extends Application{
 
         // CASE 1: Both fields are blank, we return our full list
         if (firstName.isBlank() && lastName.isBlank()){ 
-            toReturn.addAll(patients);
+            toReturn.addAll(patients.asList());
             return toReturn;
         }
 
@@ -393,33 +377,26 @@ public class Main extends Application{
     }
 
     /**
-     * Finds all patients with given last name
-     * @param i_lastName
-     * @return Patient ArrayList
-     * @throws PatientNotFoundException
+     * Finds all the patients that match a given query
+     * @param query
+     * @return all the patients that match a given query
      */
-    public static ArrayList<Patient> findPatientsWithLastName(String i_lastName) throws PatientNotFoundException{
-
-        ArrayList<Patient> allPatients = new ArrayList<>();
-        for (Patient patient: patients){
-
-            if (
-                patient.getLastName().equals(i_lastName.toUpperCase())
-            )
-            {
-                allPatients.add(patient);
-            }
-
-        }
-
-        if (allPatients.isEmpty()){
-            throw new PatientNotFoundException("CAN'T FIND ANY PATIENTS WITH LAST NAME: " + i_lastName);
-        }
-        else{
-            return allPatients;
-        }
-
+    public static ArrayList<Patient> findPatientsWithQuery(PatientQuery query){
+        return patients.findWithQueryBinarySearch(query);
     }
+
+    
+    /**
+     * Adds a patient to the patients tree
+     * @param p
+     * @return true if the patient was added probably, false otherwise
+     */
+    public static boolean addPatient(Patient p){
+        // because we're a tree, we don't even need to worry about duplicates,as those won't even add in the first palce
+        return patients.addElement(p);
+    }
+
+
     
     /**
      * Deletes a given patient
@@ -503,7 +480,7 @@ public class Main extends Application{
             }
         }
 
-        patients.add(i_patient);
+        patients.addElement(i_patient);
         
     }
 

@@ -7,6 +7,12 @@ import UtilityClasses.DataStructures.QueryStuff.Query;
 
 public class PatientSearchTree extends BinarySearchTree<Patient>{
 
+    /**
+     * Creates a new empty patient search tree
+     */
+    public PatientSearchTree(){
+        super();
+    }
     
     /**
      * Creates a new patient search tree rooted at a given node
@@ -44,12 +50,14 @@ public class PatientSearchTree extends BinarySearchTree<Patient>{
     public void binarySearchHelper(BSTNode<Patient> node, PatientQuery query, ArrayList<Patient> patients){
         // BASE CASE 1: Nothing in tree, matches query of date of birth
         if (node == null){
-            // we do nothing because nothing in the tree matches our query
+            return;
         }
+        //System.out.println(query + " " + node.getData());
         if (query.compareTo(node.getData()) < 0){
             binarySearchHelper(node.getLeft(), query, patients);
             return;
         }
+        //System.out.println(query + " " + node.getData());
         if (query.compareTo(node.getData()) > 0){
             binarySearchHelper(node.getRight(), query, patients);
             return;
@@ -59,9 +67,12 @@ public class PatientSearchTree extends BinarySearchTree<Patient>{
         // our query, so we create a new tree rooted at it's left and right nodes, and binary search through those
         // we also check if our node matches our query
 
-        if (node.getData().matches(query)){
+        
+        //System.out.println(query + " " + node.getData());
+        if (query.matches(node.getData())){
             patients.add(node.getData());
         }
+
         PatientSearchTree rightToSearch = new PatientSearchTree(node.getRight());
         PatientSearchTree leftToSearch = new PatientSearchTree(node.getLeft());
         patients.addAll(rightToSearch.findWithQueryBinarySearch(query));

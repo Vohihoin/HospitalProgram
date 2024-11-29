@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Patient",
+            "request": "launch",
+            "mainClass": "UtilityClasses.General.Patient.Patient",
+            "projectName": "HospitalManager_9d0c5f40"
+        },
+        {
+            "type": "java",
             "name": "QueryUtility",
             "request": "launch",
             "mainClass": "UtilityClasses.DataStructures.QueryStuff.QueryUtility",
