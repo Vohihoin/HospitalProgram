@@ -163,6 +163,10 @@ public class Date {
 
     }
 
+    /**
+     * Converts a date string to the form required by the databases: YYYY-MM-DD
+     * @return the form that the database takes the date string input as
+     */
     public String toDatabaseString(){
 
         String month = toString().substring(0, 2);
@@ -171,6 +175,19 @@ public class Date {
 
         return year + "-" + month + "-" + day;
 
+    }
+
+    /**
+     * Converts a date string the format MM-DD-YYYY.
+     * @return the date string in the above format
+     */
+    public String toSpecialStringFormat(){
+
+        String month = toString().substring(0, 2);
+        String day = toString().substring(3,5);
+        String year = toString().substring(6,10);
+
+        return month + "-" + day + "-" + year;
     }
 
     /**

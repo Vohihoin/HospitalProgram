@@ -1,4 +1,6 @@
-package UtilityClasses.General;
+package UtilityClasses.General.Records;
+
+import java.io.File;
 
 /**
  * Used to store a patient record for a patient's visit (So if a patient visits on a particular day, all the info about that visit will be stored
@@ -12,5 +14,8 @@ public class Record {
     // file probably should be encrypted
     // then I could create an interface for Doctors to add their doctor's notes
     // possibly could have an interface later on that requests test.
+
+    File f = new File("Vahe");
+    
     
 }

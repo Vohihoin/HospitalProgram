@@ -1,6 +1,7 @@
 package UtilityClasses.General.Patient;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +20,7 @@ import UtilityClasses.Exceptions.InvalidDateException;
 import UtilityClasses.Exceptions.InvalidInputException;
 import UtilityClasses.General.Date;
 import UtilityClasses.General.DateDifference;
-import UtilityClasses.General.Record;
+import UtilityClasses.General.Records.Record;
 
 
 
@@ -157,6 +158,28 @@ public class Patient implements Comparable<Patient>, Queryable<Patient>{
         }
 
     } 
+
+    public static void decrementIDCounter() throws FileNotFoundException{
+        if (recordsFile.exists()){
+
+
+            Scanner fileInput = new Scanner(recordsFile);
+            numOfRecords = fileInput.nextInt();
+            numOfRecords -= 1;
+    
+            //Outputing new number of patients to file
+            PrintWriter fileOutput = new PrintWriter(recordsFile);
+            fileOutput.print(numOfRecords);
+    
+            // Closes input and output files
+            fileInput.close();
+            fileOutput.close();
+    
+        }
+        else{
+            System.out.println("SYSTEM ERROR: RECORDS FILE NOT FOUND");
+        }
+    }
 
     /**
      * Returns string of patient's name

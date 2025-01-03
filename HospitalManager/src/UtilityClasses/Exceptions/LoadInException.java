@@ -1,13 +1,11 @@
 package UtilityClasses.Exceptions;
 
-import com.mysql.cj.x.protobuf.Mysqlx.Error;
-
 /**
  * LoadInException
  * Custom exception for handling errors while loading inputs from database
  * @author Ohihoin Vahe
  */
-public class LoadInException extends Exception{
+public class LoadInException extends RuntimeException{
     
     String patientName; // Used if loading errors occur when loading a particular patient
 

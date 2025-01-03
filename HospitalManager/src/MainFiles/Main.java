@@ -13,6 +13,7 @@ import javax.xml.crypto.Data;
 import com.mysql.cj.conf.ConnectionUrlParser.Pair;
 
 import DataManagingClasses.DatabaseManager;
+import DataManagingClasses.PatientFilesManager;
 import JavaFX.Controller;
 import UtilityClasses.DataStructures.BinarySearchStuff.BinarySearchTree;
 import UtilityClasses.Enums.BloodType;
@@ -48,20 +49,23 @@ public class Main extends Application{
     @Override
     public void start(Stage primStage) throws IOException, SQLException, PatientNotFoundException{
 
-        patients = loadPatientsIntoBinarySearchTree(loadPatients()); 
+        patients = loadPatientsIntoBinarySearchTree(loadPatients());
         Main.primStage = primStage;
 
+        // TITLE AND LOGO SETUP
         Main.primStage.setTitle("Hospital Manager");
         Image logo = new Image("Images\\HICILogo.png");
         Main.primStage.getIcons().add(logo);
              
         //String css = "JavaFX//generalstyle.css"; 
-        String url = "..//JavaFX//NewPage.fxml";
+
+        // load
+        //String url = "..//JavaFX//NewPage.fxml";
+        String url = "..//JavaFX//LoginPage.fxml";
         Parent baseRoot = FXMLLoader.load(getClass().getResource(url));
 
         Scene  baseScene = new Scene(baseRoot);
         //baseScene.getStylesheets().add(css);
-
         setScene(baseScene);
         Main.primStage.show();
         
@@ -76,11 +80,15 @@ public class Main extends Application{
      * Sets the scene
      * @param scene
      */
-    public void setScene(Scene scene){
+    public static void setScene(Scene scene){
 
         Main.primStage.setScene(scene);
         Main.currentScene = scene;
 
+    }
+
+    public void loadStartPage(){
+        Scene scene = new Scene(null);
     }
 
     /**
@@ -91,6 +99,11 @@ public class Main extends Application{
         launch(args);
     }
 
+    /**
+     * Loads the patients into the binary search tree
+     * @param patients the arraylist of patients 
+     * @return the PatientSearchTree containing the patients
+     */
     public static PatientSearchTree loadPatientsIntoBinarySearchTree(ArrayList<Patient> patients){
         Collections.shuffle(patients);
         PatientSearchTree patientTree = new PatientSearchTree(); 
@@ -392,8 +405,17 @@ public class Main extends Application{
      * @return true if the patient was added probably, false otherwise
      */
     public static boolean addPatient(Patient p){
-        // because we're a tree, we don't even need to worry about duplicates,as those won't even add in the first palce
-        return patients.addElement(p);
+        // because we're a tree, we don't even need to worry about duplicates,as those won't even add in the first place
+        // but if we don't add a patient, we have to decrement our counter to account for the fact that that new patient created took
+        // up a counter value
+        if (!(patients.addElement(p))){
+            try{
+                Patient.decrementIDCounter();
+            }catch(IOException e){
+            }
+            return false;
+        }
+        return true;
     }
 
 

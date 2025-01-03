@@ -15,12 +15,21 @@
    <right>
       <SplitPane dividerPositions="0.38403614457831325, 0.5" orientation="VERTICAL" prefHeight="666.0" prefWidth="253.0" BorderPane.alignment="CENTER">
         <items>
-            <AnchorPane prefHeight="260.0" prefWidth="298.0">
+            <AnchorPane prefHeight="260.0" prefWidth="298.0" style="-fx-background-color: WHITE; -fx-border-color: #FFFFFE;">
                <children>
-                  <DatePicker fx:id="dateOfBirth" layoutX="73.0" layoutY="130.0" onKeyReleased="#updatePossiblePatientsList" prefHeight="17.0" prefWidth="148.0" />
-                  <Label layoutX="9.0" layoutY="48.0" text="First Name" />
-                  <Label layoutX="10.0" layoutY="91.0" text="Last Name" />
-                  <Label layoutX="4.0" layoutY="134.0" text="Date of Birth" />
+                  <DatePicker fx:id="dateOfBirth" layoutX="73.0" layoutY="130.0" onKeyReleased="#updatePossiblePatientsList" onMouseReleased="#updatePossiblePatientsList" prefHeight="17.0" prefWidth="148.0" />
+                  <Label layoutX="9.0" layoutY="48.0" text="First Name">
+                     <font>
+                        <Font name="Yu Gothic UI Light" size="12.0" />
+                     </font></Label>
+                  <Label layoutX="10.0" layoutY="91.0" text="Last Name">
+                     <font>
+                        <Font name="Yu Gothic UI Light" size="12.0" />
+                     </font></Label>
+                  <Label layoutX="4.0" layoutY="134.0" text="Date of Birth">
+                     <font>
+                        <Font name="Yu Gothic UI Light" size="12.0" />
+                     </font></Label>
                   <Label alignment="TOP_CENTER" layoutX="88.0" layoutY="14.0" prefHeight="16.0" prefWidth="118.0" text="Find Patient">
                      <font>
                         <Font name="Bookman Old Style" size="14.0" />
@@ -30,11 +39,14 @@
                   <TextField fx:id="lastNameSearch" layoutX="73.0" layoutY="87.0" onKeyReleased="#updatePossiblePatientsList" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="34.0" prefWidth="251.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="34.0" prefWidth="251.0" style="-fx-background-color: WHITE; -fx-border-color: BLUE;">
                <children>
-                  <Button layoutX="107.0" layoutY="14.0" mnemonicParsing="false" onAction="#select" text="Select" />
+                  <Button layoutX="107.0" layoutY="14.0" mnemonicParsing="false" onAction="#select" text="Select">
+                     <font>
+                        <Font name="Yu Gothic UI Light" size="12.0" />
+                     </font></Button>
                </children></AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="8.0" prefWidth="158.0">
+            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="8.0" prefWidth="158.0" style="-fx-background-color: WHITE; -fx-border-color: RED;">
                <children>
                   <Label alignment="TOP_CENTER" layoutX="77.0" layoutY="14.0" prefHeight="16.0" prefWidth="118.0" text="Possible Patients">
                      <font>
@@ -50,7 +62,7 @@
    <left>
       <SplitPane dividerPositions="0.5120481927710844, 0.641566265060241" orientation="VERTICAL" prefHeight="666.0" prefWidth="255.0" BorderPane.alignment="CENTER">
         <items>
-            <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="253.0">
+            <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="359.0" prefWidth="253.0" style="-fx-background-color: WHITE; -fx-border-color: RED;">
                <children>
                   <Label layoutX="68.0" layoutY="14.0" text="Patient Selections">
                      <font>
@@ -60,13 +72,19 @@
                   <ListView fx:id="selectedPatientsListView" layoutX="29.0" layoutY="69.0" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="221.0" prefWidth="253.0">
+            <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="221.0" prefWidth="253.0" style="-fx-background-color: WHITE; -fx-border-color: #FFFFFE;">
                <children>
-                  <Button layoutX="55.0" layoutY="9.0" mnemonicParsing="false" onAction="#removeFromSelected" text="Remove from Selected" />
-                  <Button layoutX="97.0" layoutY="40.0" mnemonicParsing="false" text="Delete" />
+                  <Button layoutX="14.0" layoutY="28.0" mnemonicParsing="false" onAction="#removeFromSelected" text="Remove from Selected">
+                     <font>
+                        <Font name="Yu Gothic UI Light" size="12.0" />
+                     </font></Button>
+                  <Button layoutX="177.0" layoutY="28.0" mnemonicParsing="false" onAction="#addToView" text="View">
+                     <font>
+                        <Font name="Yu Gothic UI Light" size="12.0" />
+                     </font></Button>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="343.0" prefWidth="253.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="343.0" prefWidth="253.0" style="-fx-background-color: WHITE; -fx-border-color: BLUE;">
                <children>
                   <Label layoutX="61.0" layoutY="14.0" text="Associated Records">
                      <font>
@@ -79,54 +97,188 @@
       </SplitPane>
    </left>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="647.0" prefWidth="503.0" style="-fx-background-color: white; -fx-border-color: grey;" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="15.0" prefHeight="666.0" prefWidth="499.0" text="Patient Information" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="-15.0" AnchorPane.topAnchor="0.0">
+            <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="10.0" prefHeight="35.0" prefWidth="484.0" style="-fx-background-color: WHITE;" text="Patient Information" AnchorPane.bottomAnchor="624.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0">
                <font>
                   <Font name="Bookman Old Style" size="22.0" />
                </font>
             </Label>
-            <TextField fx:id="firstNameAdd" layoutX="231.0" layoutY="70.0" promptText="Bola" />
-            <TextField fx:id="lastNameAdd" layoutX="231.0" layoutY="104.0" promptText="Olumide" />
-            <Label layoutX="117.0" layoutY="70.0" text="First Name">
+            <TextField fx:id="firstNameAdd" layoutX="231.0" layoutY="70.0" onMouseClicked="#removeCannotAddMessage" promptText="Bola" AnchorPane.rightAnchor="123.0" />
+            <TextField fx:id="lastNameAdd" layoutX="231.0" layoutY="104.0" onMouseClicked="#removeCannotAddMessage" promptText="Olumide" />
+            <Label alignment="CENTER" layoutX="117.0" layoutY="70.0" text="First Name">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Yu Gothic UI Light" size="17.0" />
                </font>
             </Label>
             <Label layoutX="118.0" layoutY="104.0" text="Last Name">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Yu Gothic UI Light" size="17.0" />
                </font>
             </Label>
             <Label layoutX="103.0" layoutY="137.0" text="Date of Birth">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Yu Gothic UI Light" size="17.0" />
                </font>
             </Label>
             <Label layoutX="108.0" layoutY="174.0" text="Blood Type">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Yu Gothic UI Light" size="17.0" />
                </font>
             </Label>
             <Label layoutX="89.0" layoutY="207.0" text="Marital Status">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Yu Gothic UI Light" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="167.0" layoutY="239.0" text="Sex">
+            <Label layoutX="156.0" layoutY="240.0" text="Sex">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Yu Gothic UI Light" size="17.0" />
                </font>
             </Label>
-            <DatePicker fx:id="dateOfBirthAdd" layoutX="232.0" layoutY="138.0" prefHeight="17.0" prefWidth="148.0" />
-            <ComboBox fx:id="bloodTypeAdd" layoutX="231.0" layoutY="175.0" prefHeight="25.0" prefWidth="103.0" />
-            <ComboBox fx:id="maritalStatusAdd" layoutX="231.0" layoutY="208.0" prefWidth="150.0" />
-            <ComboBox fx:id="sexAdd" layoutX="231.0" layoutY="240.0" prefHeight="25.0" prefWidth="67.0" />
+            <DatePicker fx:id="dateOfBirthAdd" layoutX="232.0" layoutY="138.0" onMouseClicked="#removeCannotAddMessage" prefHeight="17.0" prefWidth="148.0" />
+            <ComboBox fx:id="bloodTypeAdd" layoutX="231.0" layoutY="175.0" onMouseClicked="#removeCannotAddMessage" prefHeight="25.0" prefWidth="103.0" />
+            <ComboBox fx:id="maritalStatusAdd" layoutX="231.0" layoutY="208.0" onMouseClicked="#removeCannotAddMessage" prefWidth="150.0" />
+            <ComboBox fx:id="sexAdd" layoutX="231.0" layoutY="240.0" onMouseClicked="#removeCannotAddMessage" prefHeight="25.0" prefWidth="67.0" />
             <Button fx:id="addPatientButton" layoutX="231.0" layoutY="290.0" mnemonicParsing="false" onAction="#addPatient" text="Add Patient">
                <font>
-                  <Font name="Bookman Old Style Bold" size="12.0" />
+                  <Font name="Yu Gothic UI Semibold" size="12.0" />
                </font>
             </Button>
+            <AnchorPane layoutX="1.0" layoutY="435.0" prefHeight="231.0" prefWidth="499.0">
+               <children>
+                  <Label layoutX="209.0" layoutY="14.0" text="Patient Details">
+                     <font>
+                        <Font name="Yu Gothic UI Light" size="14.0" />
+                     </font>
+                  </Label>
+                  <SplitPane dividerPositions="0.3393574297188755, 0.6827309236947792" layoutY="41.0" prefHeight="190.0" prefWidth="500.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE; -fx-border-color: red;">
+                           <children>
+                              <Label layoutX="14.0" layoutY="14.0" text="NAME">
+                                 <font>
+                                    <Font name="Yu Gothic UI Light" size="12.0" />
+                                 </font></Label>
+                              <Label layoutX="13.0" layoutY="47.0" text="DATE OF BIRTH">
+                                 <font>
+                                    <Font name="Yu Gothic UI Light" size="12.0" />
+                                 </font></Label>
+                              <Label layoutX="14.0" layoutY="86.0" text="BLOOD TYPE">
+                                 <font>
+                                    <Font name="Yu Gothic UI Light" size="12.0" />
+                                 </font></Label>
+                              <Label layoutX="14.0" layoutY="118.0" text="SEX">
+                                 <font>
+                                    <Font name="Yu Gothic UI Light" size="12.0" />
+                                 </font></Label>
+                              <Label fx:id="nameView1" layoutX="24.0" layoutY="31.0" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="dateOfBirthView1" layoutX="18.0" layoutY="64.0" prefHeight="16.0" prefWidth="77.0" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="bloodTypeView1" layoutX="24.0" layoutY="103.0" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="sexView1" layoutX="24.0" layoutY="135.0" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE; -fx-border-color: #FFFFFE;">
+                           <children>
+                              <Label layoutX="21.0" layoutY="14.0" text="NAME">
+                                 <font>
+                                    <Font name="Yu Gothic UI Light" size="12.0" />
+                                 </font></Label>
+                              <Label layoutX="22.0" layoutY="47.0" text="DATE OF BIRTH">
+                                 <font>
+                                    <Font name="Yu Gothic UI Light" size="12.0" />
+                                 </font></Label>
+                              <Label layoutX="20.0" layoutY="86.0" text="BLOOD TYPE">
+                                 <font>
+                                    <Font name="Yu Gothic UI Light" size="12.0" />
+                                 </font></Label>
+                              <Label layoutX="23.0" layoutY="119.0" text="SEX">
+                                 <font>
+                                    <Font name="Yu Gothic UI Light" size="12.0" />
+                                 </font></Label>
+                              <Label fx:id="nameView2" layoutX="38.0" layoutY="31.0" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="dateOfBirthView2" layoutX="32.0" layoutY="64.0" prefHeight="16.0" prefWidth="85.0" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="bloodTypeView2" layoutX="38.0" layoutY="103.0" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="sexView2" layoutX="38.0" layoutY="135.0" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="188.0" prefWidth="107.0" style="-fx-background-color: WHITE; -fx-border-color: blue;">
+                           <children>
+                              <Label layoutX="14.0" layoutY="14.0" text="NAME">
+                                 <font>
+                                    <Font name="Yu Gothic UI Light" size="12.0" />
+                                 </font></Label>
+                              <Label layoutX="13.0" layoutY="47.0" text="DATE OF BIRTH">
+                                 <font>
+                                    <Font name="Yu Gothic UI Light" size="12.0" />
+                                 </font></Label>
+                              <Label layoutX="14.0" layoutY="86.0" text="BLOOD TYPE">
+                                 <font>
+                                    <Font name="Yu Gothic UI Light" size="12.0" />
+                                 </font></Label>
+                              <Label layoutX="14.0" layoutY="118.0" text="SEX">
+                                 <font>
+                                    <Font name="Yu Gothic UI Light" size="12.0" />
+                                 </font></Label>
+                              <Label fx:id="nameView3" layoutX="24.0" layoutY="31.0" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="dateOfBirthView3" layoutX="18.0" layoutY="64.0" prefHeight="16.0" prefWidth="75.0" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="bloodTypeView3" layoutX="24.0" layoutY="103.0" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="sexView3" layoutX="24.0" layoutY="135.0" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+            <Label fx:id="addErrorLabel" layoutX="114.0" layoutY="333.0" prefHeight="100.0" prefWidth="306.0" textFill="#fc2121" />
          </children>
       </AnchorPane>
    </center>

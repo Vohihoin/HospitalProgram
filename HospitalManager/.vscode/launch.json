@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "TestClass",
+            "request": "launch",
+            "mainClass": "MainFiles.TestClass",
+            "projectName": "HospitalManager_9d0c5f40"
+        },
+        {
+            "type": "java",
+            "name": "PatientFilesManager",
+            "request": "launch",
+            "mainClass": "DataManagingClasses.PatientFilesManager",
+            "projectName": "HospitalManager_9d0c5f40"
+        },
+        {
+            "type": "java",
             "name": "Patient",
             "request": "launch",
             "mainClass": "UtilityClasses.General.Patient.Patient",

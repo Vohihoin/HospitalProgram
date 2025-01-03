@@ -1,5 +1,11 @@
 package DataManagingClasses;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,6 +14,7 @@ import java.sql.Statement;
 //import com.mysql.cj.jdbc.Driver;
 import UtilityClasses.General.Date;
 import UtilityClasses.General.Patient.Patient;
+import javafx.scene.chart.PieChart.Data;
 
 
 /**
@@ -18,8 +25,8 @@ import UtilityClasses.General.Patient.Patient;
  */
 public class DatabaseManager{
 
-    private final static String databaseName = "patient_data";
-    private final static String url = "jdbc:mysql://localhost:3306/" + databaseName; 
+    private static String databaseName = "patient_data";
+    private static String url = "jdbc:mysql://localhost:3306/" + databaseName; 
     // your url is the most key part. your url essentially defines where your program is stored (local or cloud) and what database you're looking into. 
     //So all you have to do is know where your database is stored and what its name is
     private final static String username = "root";
@@ -196,6 +203,11 @@ public class DatabaseManager{
 
     }
 
+    public static void setDatabaseURL(String urlBase, String databaseName){
+        DatabaseManager.databaseName = databaseName; 
+        DatabaseManager.url = urlBase + databaseName;
+    }
+
     /**
      * MOST DANGEROUS METHOD. NEVER TO BE USED PUBLICLY
      * 
@@ -293,6 +305,9 @@ public class DatabaseManager{
         return(returnString);
 
     }
+
+
+
 }
 
 
