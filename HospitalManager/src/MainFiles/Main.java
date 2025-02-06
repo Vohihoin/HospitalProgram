@@ -81,7 +81,6 @@ public class Main extends Application{
      * @param scene
      */
     public static void setScene(Scene scene){
-
         Main.primStage.setScene(scene);
         Main.currentScene = scene;
 

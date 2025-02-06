@@ -15,6 +15,8 @@ import UtilityClasses.General.Records.DoctorNote;
 
 
 public class PatientFilesManager {
+
+    private static String patientDataBaseDirectory = "PatientData\\";
     
     /**
      * Creates a directory for a patient's files in the PatientData folder

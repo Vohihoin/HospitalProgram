@@ -75,8 +75,6 @@ public class Level1PageController {
     @FXML private Label bloodTypeView3;
     @FXML private Label sexView3;
     @FXML private Label addErrorLabel;
-    private AnchorPane pane = new AnchorPane();
-    
 
     @FXML private ListView<Patient> selectedPatientsListView;
     SizedQueue<Patient> viewQueue = new SizedQueue<Patient>(3);
@@ -108,8 +106,6 @@ public class Level1PageController {
 
         // ALIGNMENT STUFF
         /** ALIGNMENT FOR THE ADDING COMPONENTS*/
-        AnchorPane middle = (AnchorPane)firstNameAdd.getParent();
-        System.out.println();
 
         // UPDATING THE VIEW WINDOW TO CLEAR IT
         updateViewWindow();
