@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 import UtilityClasses.DataStructures.QueryStuff.Query;
 import UtilityClasses.DataStructures.QueryStuff.Queryable;
-import UtilityClasses.General.Patient.Patient;
-import UtilityClasses.General.Patient.PatientQuery;
 
 /**
  * Binary tree class upon objects that are comparable

@@ -257,8 +257,8 @@
                         </SplitPane>
                      </children>
                   </AnchorPane>
-                  <Label fx:id="addErrorLabel" layoutX="114.0" layoutY="333.0" prefHeight="100.0" prefWidth="306.0" textFill="#fc2121" />
-                  <StackPane layoutX="3.0" layoutY="1.0" prefHeight="505.0" prefWidth="495.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="2.0">
+                  <Label fx:id="addErrorLabel" layoutX="47.0" layoutY="333.0" prefHeight="63.0" prefWidth="436.0" textFill="#fc2121" />
+                  <StackPane prefHeight="505.0" prefWidth="495.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0">
                      <children>
                         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="284.0" prefWidth="277.0" StackPane.alignment="TOP_CENTER">
                           <columnConstraints>
@@ -312,9 +312,14 @@
                               <ComboBox fx:id="maritalStatusAdd" onMouseClicked="#removeCannotAddMessage" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                            <StackPane.margin>
-                              <Insets top="100.0" />
+                              <Insets top="50.0" />
                            </StackPane.margin>
                         </GridPane>
+                        <Button fx:id="addPatientButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#addPatient" text="Add Patient" StackPane.alignment="BOTTOM_CENTER">
+                           <StackPane.margin>
+                              <Insets bottom="75.0" />
+                           </StackPane.margin>
+                        </Button>
                      </children>
                   </StackPane>
                </children>

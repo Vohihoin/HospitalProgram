@@ -1,0 +1,10 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "c:\\Users\\aigbe\\OneDrive\\Desktop\\Robotics\\InstalledJavaLibraries\\mysql-connector-j-8.4.0.jar",
+        "c:\\Users\\aigbe\\OneDrive\\Desktop\\Robotics\\InstalledJavaLibraries\\junit5.jar"
+    ]
+}

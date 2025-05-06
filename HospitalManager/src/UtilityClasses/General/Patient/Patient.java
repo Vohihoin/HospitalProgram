@@ -57,6 +57,11 @@ public class Patient implements Comparable<Patient>, Queryable<Patient>{
     private ArrayList<Record> records;
 
 
+    /**
+     * This is the ID of the next patient to be created
+     */
+    public static int nextPatientID;
+
 
     /**
      * Basic Constructor for Patient Class
@@ -66,21 +71,14 @@ public class Patient implements Comparable<Patient>, Queryable<Patient>{
      * @param i_dateOfBirth Patient's Date of Birth as a date object
      * @throws IOException
      */
-    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth) throws IOException{
+    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth){
 
 
         setName(i_firstName, i_lastName);
         dateOfBirth = i_dateOfBirth;
         maritalStatus = null;
         bloodType = null;
-        try{
-            assignPatientID();
-        }
-        catch(IOException e){
-            System.out.println("ERROR WITH NUMBER OF RECORDS FILE");
-        }
-        
-
+        assignPatientID();
 
     }
 
@@ -93,7 +91,7 @@ public class Patient implements Comparable<Patient>, Queryable<Patient>{
      * @param i_maritalStatus
      * @throws IOException
      */
-    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus, Sex i_sex) throws IOException, InvalidInputException{
+    public Patient(String i_firstName, String i_lastName, Date i_dateOfBirth, BloodType i_bloodType, MaritalStatus i_maritalStatus, Sex i_sex){
 
         this(i_firstName, i_lastName, i_dateOfBirth); // uses the standard patient constructor
         bloodType = i_bloodType;
@@ -131,33 +129,18 @@ public class Patient implements Comparable<Patient>, Queryable<Patient>{
      * @author Ohihoin Vahe
      * 
     */
-    private void assignPatientID() throws IOException{
-
-        // Creating input scanner
-        if (recordsFile.exists()){
-
-
-        Scanner fileInput = new Scanner(recordsFile);
-        numOfRecords = fileInput.nextInt();
-
-        //Getting patient ID
-        patientID = numOfRecords;
-        numOfRecords += 1;
-
-        //Outputing new number of patients to file
-        PrintWriter fileOutput = new PrintWriter(recordsFile);
-        fileOutput.print(numOfRecords);
-
-        // Closes input and output files
-        fileInput.close();
-        fileOutput.close();
-
-        }
-        else{
-            System.out.println("SYSTEM ERROR: RECORDS FILE NOT FOUND");
-        }
-
+    private void assignPatientID() {
+        patientID = Patient.nextPatientID++;
     } 
+
+    
+    /**
+     * Getter method for the next possible patient ID to store in the database
+     * @return
+     */
+    public synchronized static int getNextPossiblePatientID(){
+        return Patient.nextPatientID;
+    }
 
     public static void decrementIDCounter() throws FileNotFoundException{
         if (recordsFile.exists()){

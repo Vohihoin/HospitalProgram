@@ -1,11 +1,5 @@
 package DataManagingClasses;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,7 +8,6 @@ import java.sql.Statement;
 //import com.mysql.cj.jdbc.Driver;
 import UtilityClasses.General.Date;
 import UtilityClasses.General.Patient.Patient;
-import javafx.scene.chart.PieChart.Data;
 
 
 /**
@@ -25,12 +18,17 @@ import javafx.scene.chart.PieChart.Data;
  */
 public class DatabaseManager{
 
-    private static String databaseName = "patient_data";
-    private static String url = "jdbc:mysql://localhost:3306/" + databaseName; 
+    private final static String databaseName = "patient_data";
+    private final static String url = "jdbc:mysql://localhost:3306/" + databaseName;
+    private static String username = "root";
+    private static String passcode = "#englog1N12345"; // need to make this a value that the user passes in as input
+    
+    private final static String webDatabaseName = "patient_data";
+    private final static String instanceName = "cs400projects-455605:us-central1:my-sql-vm";
+    private final static String vmURL = String.format("jdbc:mysql://34.45.134.253/%s?cloudSqlInstance=%s", webDatabaseName, instanceName);
     // your url is the most key part. your url essentially defines where your program is stored (local or cloud) and what database you're looking into. 
     //So all you have to do is know where your database is stored and what its name is
-    private final static String username = "root";
-    private final static String passcode = "#englog1N12345"; // need to make this a stored value in a database
+
     
     /**
      * Creates a connection object that can be used to make statements
@@ -134,8 +132,6 @@ public class DatabaseManager{
         );
         
         query.executeUpdate(queryString);
-
-
     }
     
 
@@ -201,11 +197,6 @@ public class DatabaseManager{
         Statement workingStatement = con.createStatement();
         workingStatement.executeUpdate("TRUNCATE TABLE " + tableName);
 
-    }
-
-    public static void setDatabaseURL(String urlBase, String databaseName){
-        DatabaseManager.databaseName = databaseName; 
-        DatabaseManager.url = urlBase + databaseName;
     }
 
     /**

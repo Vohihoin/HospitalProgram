@@ -1,42 +1,30 @@
 package MainFiles;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
-import javax.xml.crypto.Data;
-
-import com.mysql.cj.conf.ConnectionUrlParser.Pair;
-
+import DataManagingClasses.DatabaseAccessor;
 import DataManagingClasses.DatabaseManager;
-import DataManagingClasses.PatientFilesManager;
-import JavaFX.Controller;
-import UtilityClasses.DataStructures.BinarySearchStuff.BinarySearchTree;
 import UtilityClasses.Enums.BloodType;
 import UtilityClasses.Enums.MaritalStatus;
 import UtilityClasses.Enums.Sex;
 import UtilityClasses.Exceptions.InvalidDateException;
 import UtilityClasses.Exceptions.InvalidInputException;
-import UtilityClasses.Exceptions.LoadInException;
 import UtilityClasses.Exceptions.PatientNotFoundException;
 import UtilityClasses.General.Date;
 import UtilityClasses.General.Patient.Patient;
 import UtilityClasses.General.Patient.PatientQuery;
 import UtilityClasses.General.Patient.PatientSearchTree;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import java.net.URI;
-import java.net.URL;
 
 public class Main extends Application{
 
@@ -44,12 +32,17 @@ public class Main extends Application{
     public static PatientSearchTree patients;
     public static Stage primStage;
     public static Scene currentScene;
+
+    private static DatabaseAccessor currentAccessor;
+
+    public static String user;
+    public static  String passcode;
     
     
     @Override
     public void start(Stage primStage) throws IOException, SQLException, PatientNotFoundException{
 
-        patients = loadPatientsIntoBinarySearchTree(loadPatients());
+        
         Main.primStage = primStage;
 
         // TITLE AND LOGO SETUP
@@ -71,6 +64,21 @@ public class Main extends Application{
         
     }
 
+    public static void loadMainPageFromLogin(String user, String passcode) throws SQLException, IOException{
+
+        Main.user = user;
+        Main.passcode = passcode;
+
+        patients = loadPatientsIntoBinarySearchTree(loadPatients());
+
+        String url = "..//JavaFX//Level1Page.fxml";
+        Parent baseRoot = FXMLLoader.load((new Main()).getClass().getResource(url));
+        Scene mainPageScene = new Scene(baseRoot);
+        Main.setScene(mainPageScene);
+
+    }
+
+
     @Override
     public void stop() throws SQLException, IOException{
         saveData();
@@ -86,10 +94,6 @@ public class Main extends Application{
 
     }
 
-    public void loadStartPage(){
-        Scene scene = new Scene(null);
-    }
-
     /**
      * 
      * 
@@ -103,7 +107,7 @@ public class Main extends Application{
      * @param patients the arraylist of patients 
      * @return the PatientSearchTree containing the patients
      */
-    public static PatientSearchTree loadPatientsIntoBinarySearchTree(ArrayList<Patient> patients){
+    public static PatientSearchTree loadPatientsIntoBinarySearchTree(List<Patient> patients){
         Collections.shuffle(patients);
         PatientSearchTree patientTree = new PatientSearchTree(); 
         for (Patient patient : patients){
@@ -112,192 +116,199 @@ public class Main extends Application{
         return patientTree;
     }
 
-    /**
-     * Loads the Patients into an array list from the database.
-     * Prints out location of errors if there are any errors loading any objects
-     * @return
-     * @throws SQLException
-     * @throws IOException
-     * @throws PatientNotFoundException
-     */
-    public static ArrayList<Patient> loadPatients() throws SQLException, IOException, PatientNotFoundException{
-
-        String currentLine;
-        int counter = 0;
-        int counter2 = 0;
-
-
-        String fullResults = DatabaseManager.returnPatientResultsTable(); // Gets the full results from the database management table
-        
-        // Database Readers
-        Scanner lineReader = new Scanner(fullResults); // Reads lines of data
-        Scanner datesLineReader;
-        Scanner unitReader; // Reads individual data items
-
-
-        ArrayList<Patient> patients = new ArrayList<>();
-        
-        // Variable Declaration and Initialization
-        int patientID = 0;
-        String firstName = "";
-        String lastName = "";
-        Date dateOfBirth = null;
-        BloodType bloodType = null;
-        MaritalStatus maritalStatus = null;
-        Sex sex = null;
-        boolean inputError = false;
-        Patient inputPatient = null;
-        String errorMessage;
-        
-        
-        Date inputDate;
-
-
-        while (lineReader.hasNextLine()){
-
-            /*
-             * Phase 1 Input:
-             * 
-             * Patient's data is collected from the database string
-             */
-
-            currentLine = lineReader.nextLine();
-            errorMessage = "LINE "+counter+"\n";
-            counter += 1;
-
-            // Makes sure line isn't empty
-            if (!(currentLine.isEmpty())){
-
-                unitReader = new Scanner(currentLine);
-
-                // Loading patient data
-                if (unitReader.hasNextInt()){
-                    patientID = unitReader.nextInt();
-                }
-                else{
-                    inputError = true;
-                    errorMessage += "NO PATIENT ID\n";
-                }
-                
-                if (unitReader.hasNext()){
-                    firstName = unitReader.next();
-                }
-                else{
-                    inputError = true;
-                    errorMessage += "NO FIRST NAME\n";
-                }
-
-                if (unitReader.hasNext()){
-                    lastName = unitReader.next();
-                }
-                else{
-                    inputError = true;
-                    errorMessage += "NO LAST NAME\n";
-                }
-
-                if (unitReader.hasNext()){
-                    try{
-                        dateOfBirth = Date.dateFromDBString(unitReader.next());
-                    }
-                    catch(InvalidDateException e){
-                       errorMessage += "INVALID INPUT DATE OF BIRTH\n";
-                        inputError = true;
-                    }
-                }
-                else{
-                    inputError = true;
-                    errorMessage += "NO DATE OF BIRTH\n";
-                }
-
-                if (unitReader.hasNext()){
-                    bloodType = BloodType.bloodTypeFromDBString(unitReader.next());
-                }
-                else{
-                    inputError = true;
-                    errorMessage += "NO VALID BLOODTYPE\n";
-                }
-                
-                if (unitReader.hasNext()){
-                    maritalStatus = MaritalStatus.maritalStatusFromDBString(unitReader.next());
-                }
-                else{
-                    inputError = true;
-                    errorMessage += "NO VALID MARITAL STATUS\n";
-                }
-
-                if (unitReader.hasNext()){
-                    sex = Sex.sexFromDBString(unitReader.next());
-                }
-                else{
-                    inputError = true;
-                    errorMessage += "NO VALID SEX\n";
-                }
-
-
-
-                // Checks if there were any errors; if there are none, it creates the patient object
-
-                if (inputError){
-                    System.err.println(errorMessage);
-                }
-                else{
-                    inputPatient = new Patient(patientID, firstName, lastName, dateOfBirth, bloodType, maritalStatus, sex);
-                }
-
-                /*
-                * Phase 2 Input: Adding patient's visited dates to date object
-                * Only happens if the patient object was successfully created
-                */
-                
-                if (!(inputError)){
-
-                    String resultString = DatabaseManager.datesResultTable(inputPatient.getPatientID());
-                    datesLineReader = new Scanner(resultString);
-                    counter2 = 0;
-
-                    while (datesLineReader.hasNextLine()){
-                        
-                        unitReader = new Scanner(datesLineReader.nextLine());
-                        counter2 += 1;
-
-                        if (unitReader.hasNextInt()){
-
-                            unitReader.nextInt(); // basically just gets and clears the date ID
-
-                            String dateDBString = unitReader.next();
-                            try{
-                                
-                                inputDate = Date.dateFromDBString(dateDBString);
-                                inputPatient.addVisitedDate(inputDate);
-
-                            }
-                            catch(InvalidDateException e){
-
-                                // If the date is invalid we print to the error stream for debugginh
-                                System.err.printf("ISSUE LOADING DATE %d FOR PATIENT %d\n", counter2, counter);
-
-                            }                          
-                        }
-                        else{
-                            System.err.printf("ISSUE LOADING DATE %d FOR PATIENT %d\n", counter2, counter);
-                        }                 
-
-                    }
-
-                    // Finally add patient object to the array list
-                    patients.add(inputPatient);
-
-                }
-
-            }
-
-        }
-
-        // Closing of scanners and returning of arraylist of patients
-        lineReader.close();
-        return patients;
-
+    public static List<Patient> loadPatients() throws SQLException{
+        Main.currentAccessor = new DatabaseAccessor(user, passcode);
+        return (currentAccessor).getPatientsList();
     }
+
+    
+
+    // /**
+    //  * Loads the Patients into an array list from the database.
+    //  * Prints out location of errors if there are any errors loading any objects
+    //  * @return
+    //  * @throws SQLException
+    //  * @throws IOException
+    //  * @throws PatientNotFoundException
+    //  */
+    // public static List<Patient> loadPatients() throws SQLException, IOException, PatientNotFoundException{
+
+    //     String currentLine;
+    //     int counter = 0;
+    //     int counter2 = 0;
+
+
+    //     String fullResults = DatabaseManager.returnPatientResultsTable(); // Gets the full results from the database management table
+        
+    //     // Database Readers
+    //     Scanner lineReader = new Scanner(fullResults); // Reads lines of data
+    //     Scanner datesLineReader;
+    //     Scanner unitReader; // Reads individual data items
+
+
+    //     ArrayList<Patient> patients = new ArrayList<>();
+        
+    //     // Variable Declaration and Initialization
+    //     int patientID = 0;
+    //     String firstName = "";
+    //     String lastName = "";
+    //     Date dateOfBirth = null;
+    //     BloodType bloodType = null;
+    //     MaritalStatus maritalStatus = null;
+    //     Sex sex = null;
+    //     boolean inputError = false;
+    //     Patient inputPatient = null;
+    //     String errorMessage;
+        
+        
+    //     Date inputDate;
+
+
+    //     while (lineReader.hasNextLine()){
+
+    //         /*
+    //          * Phase 1 Input:
+    //          * 
+    //          * Patient's data is collected from the database string
+    //          */
+
+    //         currentLine = lineReader.nextLine();
+    //         errorMessage = "LINE "+counter+"\n";
+    //         counter += 1;
+
+    //         // Makes sure line isn't empty
+    //         if (!(currentLine.isEmpty())){
+
+    //             unitReader = new Scanner(currentLine);
+
+    //             // Loading patient data
+    //             if (unitReader.hasNextInt()){
+    //                 patientID = unitReader.nextInt();
+    //             }
+    //             else{
+    //                 inputError = true;
+    //                 errorMessage += "NO PATIENT ID\n";
+    //             }
+                
+    //             if (unitReader.hasNext()){
+    //                 firstName = unitReader.next();
+    //             }
+    //             else{
+    //                 inputError = true;
+    //                 errorMessage += "NO FIRST NAME\n";
+    //             }
+
+    //             if (unitReader.hasNext()){
+    //                 lastName = unitReader.next();
+    //             }
+    //             else{
+    //                 inputError = true;
+    //                 errorMessage += "NO LAST NAME\n";
+    //             }
+
+    //             if (unitReader.hasNext()){
+    //                 try{
+    //                     dateOfBirth = Date.dateFromDBString(unitReader.next());
+    //                 }
+    //                 catch(InvalidDateException e){
+    //                    errorMessage += "INVALID INPUT DATE OF BIRTH\n";
+    //                     inputError = true;
+    //                 }
+    //             }
+    //             else{
+    //                 inputError = true;
+    //                 errorMessage += "NO DATE OF BIRTH\n";
+    //             }
+
+    //             if (unitReader.hasNext()){
+    //                 bloodType = BloodType.bloodTypeFromDBString(unitReader.next());
+    //             }
+    //             else{
+    //                 inputError = true;
+    //                 errorMessage += "NO VALID BLOODTYPE\n";
+    //             }
+                
+    //             if (unitReader.hasNext()){
+    //                 maritalStatus = MaritalStatus.maritalStatusFromDBString(unitReader.next());
+    //             }
+    //             else{
+    //                 inputError = true;
+    //                 errorMessage += "NO VALID MARITAL STATUS\n";
+    //             }
+
+    //             if (unitReader.hasNext()){
+    //                 sex = Sex.sexFromDBString(unitReader.next());
+    //             }
+    //             else{
+    //                 inputError = true;
+    //                 errorMessage += "NO VALID SEX\n";
+    //             }
+
+
+
+    //             // Checks if there were any errors; if there are none, it creates the patient object
+
+    //             if (inputError){
+    //                 System.err.println(errorMessage);
+    //             }
+    //             else{
+    //                 inputPatient = new Patient(patientID, firstName, lastName, dateOfBirth, bloodType, maritalStatus, sex);
+    //             }
+
+    //             /*
+    //             * Phase 2 Input: Adding patient's visited dates to date object
+    //             * Only happens if the patient object was successfully created
+    //             */
+                
+    //             if (!(inputError)){
+
+    //                 String resultString = DatabaseManager.datesResultTable(inputPatient.getPatientID());
+    //                 datesLineReader = new Scanner(resultString);
+    //                 counter2 = 0;
+
+    //                 while (datesLineReader.hasNextLine()){
+                        
+    //                     unitReader = new Scanner(datesLineReader.nextLine());
+    //                     counter2 += 1;
+
+    //                     if (unitReader.hasNextInt()){
+
+    //                         unitReader.nextInt(); // basically just gets and clears the date ID
+
+    //                         String dateDBString = unitReader.next();
+    //                         try{
+                                
+    //                             inputDate = Date.dateFromDBString(dateDBString);
+    //                             inputPatient.addVisitedDate(inputDate);
+
+    //                         }
+    //                         catch(InvalidDateException e){
+
+    //                             // If the date is invalid we print to the error stream for debugginh
+    //                             System.err.printf("ISSUE LOADING DATE %d FOR PATIENT %d\n", counter2, counter);
+
+    //                         }                          
+    //                     }
+    //                     else{
+    //                         System.err.printf("ISSUE LOADING DATE %d FOR PATIENT %d\n", counter2, counter);
+    //                     }                 
+
+    //                 }
+
+    //                 // Finally add patient object to the array list
+    //                 patients.add(inputPatient);
+
+    //             }
+
+    //         }
+
+    //     }
+
+    //     // Closing of scanners and returning of arraylist of patients
+    //     lineReader.close();
+    //     return patients;
+
+    // }
 
     /**
      * Finds patient using first and last name
@@ -429,46 +440,51 @@ public class Main extends Application{
 
     }
 
-    /**
-     * Saves All The Patient Data In Appropiate Locations
-     * Returns 1 is save is successful. Else, returns 0
-     * @throws SQLException
-     * @throws IOException
-     */
-    private static int saveData() throws SQLException, IOException{
+    // /**
+    //  * Saves All The Patient Data In Appropiate Locations
+    //  * Returns 1 is save is successful. Else, returns 0
+    //  * @throws SQLException
+    //  * @throws IOException
+    //  */
+    // private static int saveData() throws SQLException, IOException{
 
-        int i = 0; // Dates ID counter 
-        DatabaseManager.truncateTransitDatesTable();
-        DatabaseManager.truncateTransitPatientsInfoTable();
+    //     int i = 0; // Dates ID counter 
+    //     DatabaseManager.truncateTransitDatesTable();
+    //     DatabaseManager.truncateTransitPatientsInfoTable();
        
 
-        /**
-         * Because the patient data is a very important data, I don't want it to be volatile because when we want to save the 
-         * new information, we have to completely clear out our table. So, I created transit tables where I try and save the data first
-         * before moving it to the actual tables
-         */
-        try{
-            for (Patient patient: patients){
+    //     /**
+    //      * Because the patient data is a very important data, I don't want it to be volatile because when we want to save the 
+    //      * new information, we have to completely clear out our table. So, I created transit tables where I try and save the data first
+    //      * before moving it to the actual tables
+    //      */
+    //     try{
+    //         for (Patient patient: patients){
 
-                DatabaseManager.addRecord(patient);
+    //             DatabaseManager.addRecord(patient);
 
-                for (Date date: patient.getDatesVisitedArrayList()){
-                    DatabaseManager.addPatientDate(i, date, patient.getPatientID());
-                    i++;
-                }
-            }
-        }
-        catch(SQLException e){
-            System.out.println(e.toString());
-            return 0;
-        }
+    //             for (Date date: patient.getDatesVisitedArrayList()){
+    //                 DatabaseManager.addPatientDate(i, date, patient.getPatientID());
+    //                 i++;
+    //             }
+    //         }
+    //     }
+    //     catch(SQLException e){
+    //         System.out.println(e.toString());
+    //         return 0;
+    //     }
 
-        // Then if there are no errors, then we move everything to the actual table
-        DatabaseManager.transitToActualTables();
+    //     // Then if there are no errors, then we move everything to the actual table
+    //     DatabaseManager.transitToActualTables();
 
-        System.out.println("DATA SAVED....");
-        return(1);
+    //     System.out.println("DATA SAVED....");
+    //     return(1);
 
+    // }
+
+    public static int saveData() throws SQLException{
+        currentAccessor.storePatients(patients.asList());
+        return 1;
     }
 
 

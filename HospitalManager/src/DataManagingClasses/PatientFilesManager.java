@@ -1,17 +1,9 @@
 package DataManagingClasses;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-
-import UtilityClasses.Enums.BloodType;
-import UtilityClasses.Enums.MaritalStatus;
-import UtilityClasses.Enums.Sex;
 import UtilityClasses.General.Date;
 import UtilityClasses.General.Patient.Patient;
-import UtilityClasses.General.Records.Doctor;
-import UtilityClasses.General.Records.DoctorNote;
 
 
 public class PatientFilesManager {
@@ -61,6 +53,7 @@ public class PatientFilesManager {
         // the file writer line creates the new file if it doesn't exist
         try{
             FileWriter f = new FileWriter(newFile);
+            f.close();
         }catch(IOException e){
             return false;
         }

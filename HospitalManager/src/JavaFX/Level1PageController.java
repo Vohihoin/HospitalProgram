@@ -2,25 +2,20 @@ package JavaFX;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.mysql.cj.result.LongValueFactory;
-
 import MainFiles.Main;
 import UtilityClasses.DataStructures.QueueStuff.SizedQueue;
-import UtilityClasses.DataStructures.StackStuff.SizedStack;
 import UtilityClasses.Enums.BloodType;
 import UtilityClasses.Enums.MaritalStatus;
 import UtilityClasses.Enums.Sex;
 import UtilityClasses.Exceptions.InvalidDateException;
-import UtilityClasses.Exceptions.InvalidInputException;
 import UtilityClasses.General.Date;
 import UtilityClasses.General.Patient.Patient;
 import UtilityClasses.General.Patient.PatientQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -28,10 +23,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
+import javafx.scene.input.MouseEvent;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -88,7 +81,6 @@ public class Level1PageController {
 
         possiblePatientsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         selectedPatientsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
         bloodTypes = FXCollections.observableArrayList();
         bloodTypes.addAll(BloodType.values());
         bloodTypes.add(null); // adding a null option to use if the value is unknown
@@ -257,16 +249,12 @@ public class Level1PageController {
             return;
         }
 
-        try{
-            Patient toAdd = new Patient(firstNameAdd.getText(), lastNameAdd.getText(), new Date(dateOfBirthAdd.getValue()), bloodTypeAdd.getValue(),maritalStatusAdd.getValue(), sexAdd.getValue());
-            if (!(Main.addPatient(toAdd))){
-                displayCannottAdd("PATIENT IS A DUPLICATE");
-            }
-            updatePossiblePatientsList();
-        }catch(IOException e){
-            System.out.println(e.getMessage());
-        }
         
+        Patient toAdd = new Patient(firstNameAdd.getText(), lastNameAdd.getText(), new Date(dateOfBirthAdd.getValue()), bloodTypeAdd.getValue(),maritalStatusAdd.getValue(), sexAdd.getValue());
+        if (!(Main.addPatient(toAdd))){
+            displayCannottAdd("PATIENT IS A DUPLICATE");
+        }
+        updatePossiblePatientsList();
 
     }
 
