@@ -25,8 +25,8 @@ public class DatabaseAccessor {
     private Connection con;
 
     private final static String webDatabaseName = "hospital_db";
-    private final static String instanceName = "cs400projects-455605:us-central1:my-sql-vm";
-    public static final String url = String.format("jdbc:mysql://34.45.134.253/%s?cloudSqlInstance=%s", webDatabaseName, instanceName); 
+    private final static String hostname = "hiciserver.com";
+    public static final String url = String.format("jdbc:mysql://%s:3306/%s", hostname, webDatabaseName); 
 
     /**
      * Creates a new patient database accessor 
@@ -38,7 +38,9 @@ public class DatabaseAccessor {
         this.password = password;
         this.username = username;
         establishConnection();
+        System.out.println("Able to connect to database");
         loadNextPossibleID();
+        System.out.println("Able to load the next possible patient ID");
     }
 
     /**
@@ -269,7 +271,7 @@ public class DatabaseAccessor {
         command += ";";
 
 
-        System.out.println(command);
+        //System.out.println(command);
         try{
             Statement workingStatement = con.createStatement();
             workingStatement.executeUpdate(command);
@@ -368,6 +370,7 @@ public class DatabaseAccessor {
     private void storeNewPossiblePatientID() throws SQLException{
         Statement workingStatement = con.createStatement();
         workingStatement.executeUpdate("TRUNCATE nextPatientID;");
+        workingStatement.executeUpdate(String.format("INSERT INTO nextPatientID VALUES(%d);", Patient.getNextPossiblePatientID()));
         System.out.println(String.format("INSERT INTO nextPatientID VALUES(%d);", Patient.getNextPossiblePatientID()));
     }
 

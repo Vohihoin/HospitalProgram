@@ -30,7 +30,7 @@
             <Font name="Yu Gothic UI Light" size="12.0" />
          </font>
       </Button>
-      <Label fx:id="errorText" layoutX="231.0" layoutY="311.0" prefHeight="43.0" prefWidth="149.0" />
+      <Label fx:id="errorText" layoutX="113.0" layoutY="311.0" prefHeight="62.0" prefWidth="364.0" />
       <PasswordField fx:id="passcode" layoutX="259.0" layoutY="214.0" onAction="#openMainPage" />
    </children>
 </AnchorPane>
